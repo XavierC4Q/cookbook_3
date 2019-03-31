@@ -1,5 +1,18 @@
 import { Reducer } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { UserActions } from '../actions/types/user';
+import {
+	LOGIN,
+	LOGGED_IN_USER,
+	LOGIN_SUCCESS,
+	LOGIN_ERROR,
+	SIGNUP,
+	SIGNUP_SUCCESS,
+	SIGNUP_ERROR,
+	LOGOUT,
+	LOGOUT_ERROR,
+	LOGOUT_SUCCESS
+} from '../constants/user';
 
 export interface IUser {
 	id: Number;
@@ -20,6 +33,9 @@ export interface IUserState {
 	logout_error: String;
 }
 
+export type UserThunk<R> = ThunkAction<R, IUserState, undefined, UserActions>;
+
+
 const initialState: IUserState = {
 	currentUser: null,
 	login_pending: false,
@@ -32,60 +48,60 @@ const initialState: IUserState = {
 
 export const userReducer: Reducer<IUserState, UserActions> = (state = initialState, action) => {
 	switch (action.type) {
-		case 'user/LOGGED IN USER':
+		case LOGGED_IN_USER:
 			return {
 				...state,
 				currentUser: action.loggedInUser
 			};
-		case 'user/LOGIN':
+		case LOGIN:
 			return {
 				...state,
 				login_pending: true,
 				login_error: ''
 			};
-		case 'user/LOGIN ERROR':
+		case LOGIN_ERROR:
 			return {
 				...state,
 				login_pending: false,
 				login_error: action.login_error
 			};
-		case 'user/LOGIN SUCCESS':
+		case LOGIN_SUCCESS:
 			return {
 				...state,
 				login_pending: false,
 				currentUser: action.user
 			};
-		case 'user/SIGNUP':
+		case SIGNUP:
 			return {
 				...state,
 				signup_pending: true,
 				signup_error: ''
 			};
-		case 'user/SIGNUP SUCCESS':
+		case SIGNUP_SUCCESS:
 			return {
 				...state,
 				currentUser: action.newUser,
 				signup_pending: false
 			};
-		case 'user/SIGNUP ERROR':
+		case SIGNUP_ERROR:
 			return {
 				...state,
 				signup_pending: false,
 				signup_error: action.signup_error
 			};
-		case 'user/LOGOUT':
+		case LOGOUT:
 			return {
 				...state,
 				logout_pending: true,
 				logout_error: ''
 			};
-		case 'user/LOGOUT SUCCESS':
+		case LOGOUT_SUCCESS:
 			return {
 				...state,
 				currentUser: null,
 				logout_pending: false
 			};
-		case 'user/LOGOUT ERROR':
+		case LOGOUT_ERROR:
 			return {
 				...state,
 				logout_error: action.logout_error,
