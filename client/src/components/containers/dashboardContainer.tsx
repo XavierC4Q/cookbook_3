@@ -5,17 +5,15 @@ import { IUser } from '../../store/reducers/user';
 
 import Dashboard from '../dashboard';
 
-interface IOwnProps {}
-
 interface IStateProps {
 	currentUser: IUser | null;
 }
 
-interface IDispatchProps {}
 
-type DashBoardContainerProps = IStateProps & IDispatchProps & IOwnProps;
+type IDashBoardContainerProps = IStateProps;
 
-const DashBoardContainer: React.FC<DashBoardContainerProps> = (props: DashBoardContainerProps) => {
+const DashBoardContainer: React.FC<IDashBoardContainerProps> = (props: IDashBoardContainerProps) => {
+	
 	return (
 		<React.Fragment>
 			<Dashboard {...props} />
@@ -27,4 +25,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 	currentUser: state.users.currentUser
 });
 
-export default connect<IStateProps, {}, IOwnProps, AppState>(mapStateToProps)(DashBoardContainer);
+export default connect<IStateProps, {}, {}, AppState>(mapStateToProps)(DashBoardContainer);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Link, withRouter, RouteProps, RouteComponentProps } from 'react-router-dom';
+import { Route, withRouter, RouteProps, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { loggedInThunk } from './store/actions/actionCreators/user';
@@ -9,26 +9,20 @@ import DashBoardContainer from './components/containers/dashboardContainer';
 import './App.css';
 import UserAuthContainer from './components/containers/userAuthContainer';
 
-interface IOwnProps extends RouteComponentProps {}
-
-interface IStateProps {}
 
 interface IDispatchProps {
 	getLoggedInUser: () => Promise<boolean>;
 }
 
-type Props = IStateProps & IDispatchProps & IOwnProps;
+type IAppProps = IDispatchProps & RouteComponentProps;
 
-const App: React.FC<Props> = (props: Props) => {
+const App: React.FC<IAppProps> = (props: IAppProps) => {
 	React.useEffect(() => {
 		props.getLoggedInUser();
 	}, []);
 
 	return (
 		<div>
-			<nav>
-				<Link to='/auth/login'>Login</Link> <Link to='/'>Dashboard</Link> <Link to='/auth/signup'>Signup</Link>
-			</nav>
 			<Route
 				exact
 				path='/'
@@ -55,4 +49,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProp
 	};
 };
 
-export default withRouter(connect<IStateProps, IDispatchProps, IOwnProps>(null, mapDispatchToProps)(App));
+export default withRouter(connect<{}, IDispatchProps, {}>(null, mapDispatchToProps)(App));

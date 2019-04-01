@@ -8,7 +8,6 @@ import { loginThunk, signupThunk, LoginCred, SignUpCred } from '../../store/acti
 import LoginForm from '../forms/login';
 import SignUpForm from '../forms/signup';
 
-interface IOwnProps extends RouteComponentProps {}
 
 interface IStateProps extends IUserState {}
 
@@ -17,10 +16,10 @@ interface IDispatchProps {
 	signupUser: (credentials: SignUpCred) => void;
 }
 
-type IUserAuthContainerProps = IStateProps & IDispatchProps & IOwnProps;
+type IUserAuthContainerProps = IStateProps & IDispatchProps;
 
 const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthContainerProps) => {
-    console.log(props)
+
     return (
 		<React.Fragment>
 			<Route
@@ -64,6 +63,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProp
 	};
 };
 
-export default connect<IStateProps, IDispatchProps, IOwnProps, AppState>(mapStateToProps, mapDispatchToProps)(
+export default connect<IStateProps, IDispatchProps, {}, AppState>(mapStateToProps, mapDispatchToProps)(
 	UserAuthContainer
 );

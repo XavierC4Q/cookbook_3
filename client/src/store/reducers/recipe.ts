@@ -11,7 +11,7 @@ export interface IRecipe {
 	ingredients: Array<string>;
 }
 
-interface IRecipeState {
+export interface IRecipeState {
     all_user_recipes: Array<IRecipe>;
     single_recipe: IRecipe | null;
     add_recipe_success: boolean;
