@@ -13,7 +13,7 @@ import {
 	LOGOUT_ERROR,
 	LOGOUT_SUCCESS
 } from '../../constants/user';
-import { UserThunk } from '../../reducers/user';
+import { AppThunk } from '../../config';
 
 export type LoginCred = {
     username: String;
@@ -39,7 +39,7 @@ const LOGIN_SUCCESS_AC = (user: IUser): UserActions => ({ type: LOGIN_SUCCESS, u
 
 
 
-export const loggedInThunk = (): UserThunk<Promise<boolean>> => async dispatch => {
+export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch => {
     try {
         const loggedInUser = await axios.get('auth/user/');
         dispatch(LOGGED_IN_AC(loggedInUser.data));
@@ -50,7 +50,7 @@ export const loggedInThunk = (): UserThunk<Promise<boolean>> => async dispatch =
     }
 };
 
-export const loginThunk = (credentials: LoginCred): UserThunk<void> => async dispatch => {
+export const loginThunk = (credentials: LoginCred): AppThunk<void> => async dispatch => {
     dispatch(LOGIN_AC());
     try {
         await axios.post('auth/login/', credentials);

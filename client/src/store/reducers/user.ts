@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import { UserActions } from '../actions/types/user';
 import {
 	LOGIN,
@@ -23,7 +22,7 @@ export interface IUser {
 	last_login: Date;
 }
 
-export interface IUserState {
+interface IUserState {
 	currentUser: IUser | null;
 	login_pending: Boolean;
 	login_error: String;
@@ -32,8 +31,6 @@ export interface IUserState {
 	logout_pending: Boolean;
 	logout_error: String;
 }
-
-export type UserThunk<R> = ThunkAction<R, IUserState, undefined, UserActions>;
 
 
 const initialState: IUserState = {
