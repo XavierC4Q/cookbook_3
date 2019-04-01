@@ -25,7 +25,7 @@ class Follow (models.Model):
 class Recipe (models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe_name = models.CharField(max_length=50, blank=False, null=False)
+    recipe_name = models.CharField(max_length=50, blank=False, null=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     ingredients = ArrayField(

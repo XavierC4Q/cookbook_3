@@ -27,18 +27,18 @@ class RecipeViewSet (viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
 
     @action(detail=False, methods=['GET'])
-    def user_recipes (self, request):
-        user = request.GET.get('user_id', '')
-        get_user = User.objects.filter(pk=user)
-        serialize_user = self.get_serializer(get_user)
+    def user_recipes(self, request):
+        user_id = request.GET.get('user_id', 0)
+        res = Recipe.objects.filter(owner=user_id)
 
-        if serialize_user.data is not None:
-
-            res = Recipe.objects.filter(owner=serialize_user.data)
-            serialize_res = self.get_serializer(res, many=True)
-            return Response(serialize_res.data)
-        
+        if res is not None:
+            serializer = self.get_serializer(res, many=True)
+            return Response(serializer.data)
         return Response([])
+
+
+            
+    
 
 class FollowViewSet (viewsets.ModelViewSet):
 
