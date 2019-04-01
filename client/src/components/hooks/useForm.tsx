@@ -5,11 +5,11 @@ export interface IFormErrors {
 }
 
 export interface IFormState {
-    inputs: { [key: string] : any };
-    handleInput: (e: React.FormEvent<HTMLInputElement>) => void;
-    errors: { [key: string] : string[] | any };
-    handleErrors: (errs: IFormErrors) => void;
-    resetForm: () => void;
+	inputs: { [key: string]: any };
+	handleInput: (e: React.FormEvent<HTMLInputElement>) => void;
+	errors: { [key: string]: string[] | any };
+	handleErrors: (errs: IFormErrors) => void;
+	resetForm: () => void;
 }
 
 const initialErrors = (values: object): object => {

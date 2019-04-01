@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IUser } from '../../store/reducers/user';
 import { LoginCred } from '../../store/actions/actionCreators/user';
 import useFormHook, { IFormState } from '../hooks/useForm';
+import * as Yup from 'yup';
 import Field from './field';
 
 interface ILoginFormProps extends RouteComponentProps {
@@ -22,6 +23,11 @@ const initialState: ILoginState = {
 	password: ''
 };
 
+const validate: Yup.Schema<object> = Yup.object().shape({
+	username: Yup.string().required('username: Username is Required!'),
+	password: Yup.string().required('password: Password is Required!')
+});
+
 const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 	React.useEffect(
 		(): void => {
@@ -34,9 +40,22 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 
 	const FormState: IFormState = useFormHook(initialState);
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+		e.preventDefault();
+
+		try {
+			const validateOpts: Yup.ValidateOptions = { abortEarly: false };
+			await validate.validate(FormState.inputs, validateOpts);
+			await props.login(FormState.inputs as LoginCred);
+			FormState.resetForm();
+		} catch (error) {
+			FormState.handleErrors(error.errors as Yup.ValidationError);
+		}
+	};
+
 	return (
 		<div>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<h1>Login Here</h1>
 				<Field
 					type='text'
