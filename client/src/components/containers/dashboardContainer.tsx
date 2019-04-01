@@ -13,9 +13,9 @@ interface IStateProps {
 
 interface IDispatchProps {}
 
-type IProps = IStateProps & IDispatchProps & IOwnProps;
+type DashBoardContainerProps = IStateProps & IDispatchProps & IOwnProps;
 
-const DashBoardContainer: React.FC<IProps> = (props: IProps) => {
+const DashBoardContainer: React.FC<DashBoardContainerProps> = (props: DashBoardContainerProps) => {
 	return (
 		<React.Fragment>
 			<Dashboard {...props} />

@@ -18,7 +18,10 @@ class UserViewSet (viewsets.ModelViewSet):
         res = User.objects.filter(country=same_country)
         serializer = self.get_serializer(res, many=True)
 
-        return Response(serializer.data)
+        if res is not None:
+            serializer = self.get_serializer(res, many=True)
+            return Response(serializer.data)
+        return Response([])
 
 
 class RecipeViewSet (viewsets.ModelViewSet):
@@ -36,9 +39,6 @@ class RecipeViewSet (viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response([])
 
-
-            
-    
 
 class FollowViewSet (viewsets.ModelViewSet):
 

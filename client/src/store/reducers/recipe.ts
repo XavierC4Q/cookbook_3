@@ -5,7 +5,7 @@ import { IUser } from './user';
 
 export interface IRecipe {
 	owner: IUser;
-	recipe_name: String;
+	recipe_name: string;
 	created: Date;
 	updated: Date;
 	ingredients: Array<string>;
@@ -14,18 +14,18 @@ export interface IRecipe {
 interface IRecipeState {
     all_user_recipes: Array<IRecipe>;
     single_recipe: IRecipe | null;
-    add_recipe_success: Boolean;
-    all_recipes_loading: Boolean;
-    all_recipes_err: String;
-    single_recipe_loading: Boolean;
-    single_recipe_err: String;
-    edit_recipe_loading: Boolean;
-    edit_recipe_success: Boolean;
-    edit_recipe_err: String;
-    remove_recipe_success: Boolean;
-    remove_recipe_err: String;
-    add_recipe_pending: Boolean;
-    add_recipe_err: String;
+    add_recipe_success: boolean;
+    all_recipes_loading: boolean;
+    all_recipes_err: string;
+    single_recipe_loading: boolean;
+    single_recipe_err: string;
+    edit_recipe_loading: boolean;
+    edit_recipe_success: boolean;
+    edit_recipe_err: string;
+    remove_recipe_success: boolean;
+    remove_recipe_err: string;
+    add_recipe_pending: boolean;
+    add_recipe_err: string;
 }
 
 const initialState: IRecipeState = {

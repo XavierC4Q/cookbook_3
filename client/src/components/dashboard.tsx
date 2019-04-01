@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-interface IProps {}
+interface IDashboardProps {}
 
-const Dashboard: React.SFC<IProps> = (props: IProps) => {
+const Dashboard: React.SFC<IDashboardProps> = (props: IDashboardProps) => {
 	return (
 		<div>
 			<h1>Cookbook Version 3.0</h1>

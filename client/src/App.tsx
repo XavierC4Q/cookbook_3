@@ -7,6 +7,7 @@ import { loggedInThunk } from './store/actions/actionCreators/user';
 import DashBoardContainer from './components/containers/dashboardContainer';
 
 import './App.css';
+import UserAuthContainer from './components/containers/userAuthContainer';
 
 interface IOwnProps extends RouteComponentProps {}
 
@@ -26,13 +27,19 @@ const App: React.FC<Props> = (props: Props) => {
 	return (
 		<div>
 			<nav>
-				<Link to='/'>Dashboard</Link> <Link to='/login'>Login</Link>
+				<Link to='/auth/login'>Login</Link> <Link to='/'>Dashboard</Link> <Link to='/auth/signup'>Signup</Link>
 			</nav>
 			<Route
 				exact
 				path='/'
 				render={(routeProps: RouteProps): React.ReactNode => {
 					return <DashBoardContainer {...routeProps} />;
+				}}
+			/>
+			<Route
+				path='/auth'
+				render={(routeProps: RouteComponentProps): React.ReactNode => {
+					return <UserAuthContainer {...routeProps} />;
 				}}
 			/>
 		</div>

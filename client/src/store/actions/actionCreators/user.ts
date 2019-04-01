@@ -16,47 +16,68 @@ import {
 import { AppThunk } from '../../config';
 
 export type LoginCred = {
-    username: String;
-    password: String
+	username: string;
+	password: string;
 };
 
 export type SignUpCred = {
-    username: String;
-    password1: String;
-    password2: String;
-    country: String;
-    email: String;
-}
+	username: string;
+	password1: string;
+	password2: string;
+	country: string;
+	email: string;
+};
 
 const LOGGED_IN_AC = (loggedInUser: IUser): UserActions => ({ type: LOGGED_IN_USER, loggedInUser });
 
 const LOGIN_AC = (): UserActions => ({ type: LOGIN });
 
-const LOGIN_ERR_AC = (login_error: String): UserActions => ({ type: LOGIN_ERROR, login_error });
+const LOGIN_ERR_AC = (login_error: string): UserActions => ({ type: LOGIN_ERROR, login_error });
 
 const LOGIN_SUCCESS_AC = (user: IUser): UserActions => ({ type: LOGIN_SUCCESS, user });
 
+const SIGNUP_AC = (): UserActions => ({ type: SIGNUP });
 
+const SIGNUP_ERR_AC = (signup_error: string): UserActions => ({ type: SIGNUP_ERROR, signup_error });
 
+const SIGNUP_SUCCESS_AC = (newUser: IUser): UserActions => ({ type: SIGNUP_SUCCESS, newUser });
 
 export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch => {
-    try {
+	try {
         const loggedInUser = await axios.get('auth/user/');
-        dispatch(LOGGED_IN_AC(loggedInUser.data));
-        
-        return true
-    } catch (error) {
-        return false
-    }
+        localStorage.setItem('user', JSON.stringify(loggedInUser.data, null, 2));
+		dispatch(LOGGED_IN_AC(loggedInUser.data));
+		return true;
+	} catch (error) {
+        localStorage.removeItem('user');
+		return false;
+	}
 };
 
-export const loginThunk = (credentials: LoginCred): AppThunk<void> => async dispatch => {
-    dispatch(LOGIN_AC());
-    try {
-        await axios.post('auth/login/', credentials);
-        const user = await axios.get('auth/user/');
-        dispatch(LOGIN_SUCCESS_AC(user.data));
-    } catch (error) {
-        dispatch(LOGIN_ERR_AC('Wrong username/password combination'));
-    }
+export const loginThunk = (credentials: LoginCred): AppThunk<void> => dispatch => {
+	dispatch(LOGIN_AC());
+	setTimeout(async () => {
+		try {
+			await axios.post('auth/login/', credentials);
+            const user = await axios.get('auth/user/');
+            localStorage.setItem('user', JSON.stringify(user.data, null, 2));
+			dispatch(LOGIN_SUCCESS_AC(user.data));
+		} catch (error) {
+			dispatch(LOGIN_ERR_AC('Wrong username/password combination'));
+		}
+	}, 2000);
+};
+
+export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatch => {
+    dispatch(SIGNUP_AC());
+    setTimeout(async () => {
+        try {
+            await axios.post('auth/signup/', credentials);
+            const user = await axios.get('auth/user/');
+            localStorage.setItem('user', JSON.stringify(user.data, null, 2));
+            dispatch(SIGNUP_SUCCESS_AC(user.data));
+        } catch (error) {
+            dispatch(SIGNUP_ERR_AC('Provided credentials are invalid'));
+        }
+    }, 2000);
 };

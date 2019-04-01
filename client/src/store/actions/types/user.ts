@@ -24,7 +24,7 @@ interface ILoginSuccessAction extends Action<typeof LOGIN_SUCCESS> {
 }
 
 interface ILoginErrorAction extends Action<typeof LOGIN_ERROR> {
-	login_error: String;
+	login_error: string;
 }
 
 interface ISignUpAction extends Action<typeof SIGNUP> {}
@@ -34,7 +34,7 @@ interface ISignUpSuccessAction extends Action<typeof SIGNUP_SUCCESS> {
 }
 
 interface ISignUpErrorAction extends Action<typeof SIGNUP_ERROR> {
-	signup_error: String;
+	signup_error: string;
 }
 
 interface ILogoutAction extends Action<typeof LOGOUT> {}
@@ -42,7 +42,7 @@ interface ILogoutAction extends Action<typeof LOGOUT> {}
 interface ILogoutSuccessAction extends Action<typeof LOGOUT_SUCCESS> {}
 
 interface ILogoutErrorAction extends Action<typeof LOGOUT_ERROR> {
-	logout_error: String;
+	logout_error: string;
 }
 
 type LoginUnion = ILoginAction | ILoginSuccessAction | ILoginErrorAction;
