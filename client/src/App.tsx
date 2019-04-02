@@ -5,16 +5,17 @@ import { ThunkDispatch } from 'redux-thunk';
 import { loggedInThunk } from './store/actions/actionCreators/user';
 
 import DashBoardContainer from './components/containers/dashboardContainer';
+import UserAuthContainer from './components/containers/userAuthContainer';
+import Header from './components/header';
+import Footer from './components/footer';
 
 import './App.css';
-import UserAuthContainer from './components/containers/userAuthContainer';
-
 
 interface IDispatchProps {
 	getLoggedInUser: () => Promise<boolean>;
 }
 
-type IAppProps = IDispatchProps & RouteComponentProps;
+interface IAppProps extends IDispatchProps, RouteComponentProps {}
 
 const App: React.FC<IAppProps> = (props: IAppProps) => {
 	React.useEffect(() => {
@@ -22,7 +23,8 @@ const App: React.FC<IAppProps> = (props: IAppProps) => {
 	}, []);
 
 	return (
-		<div>
+		<div className='app-cont'>
+			<Header />
 			<Route
 				exact
 				path='/'
@@ -36,6 +38,7 @@ const App: React.FC<IAppProps> = (props: IAppProps) => {
 					return <UserAuthContainer {...routeProps} />;
 				}}
 			/>
+			<Footer />
 		</div>
 	);
 };

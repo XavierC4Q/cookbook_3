@@ -67,7 +67,7 @@ const SignUpForm: React.SFC<ISignUpFormProps> = (props: ISignUpFormProps) => {
     
 	return (
 		<div>
-			<form>
+			<form onSubmit={handleSubmit}>
                 <h1>Signup Here</h1>
                 <Field
 					type='text'

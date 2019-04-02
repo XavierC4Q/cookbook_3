@@ -16,7 +16,7 @@ interface IDispatchProps {
 	signupUser: (credentials: SignUpCred) => void;
 }
 
-type IUserAuthContainerProps = IStateProps & IDispatchProps;
+interface IUserAuthContainerProps extends IStateProps, IDispatchProps {};
 
 const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthContainerProps) => {
 
