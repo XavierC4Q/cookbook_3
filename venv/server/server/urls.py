@@ -28,7 +28,7 @@ router.register(r'follow', FollowViewSet, 'Follow')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^auth/', include('rest_auth.urls')),
-    url(r'^auth/signup/', include('rest_auth.registration.urls')),
+    url(r'^rest_auth/', include('rest_auth.urls')),
+    url(r'^rest_auth/signup/', include('rest_auth.registration.urls')),
     url(r'^cookbook/', include(router.urls))
 ]
