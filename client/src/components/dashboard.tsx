@@ -6,7 +6,7 @@ import Feed from './feed';
 interface IDashboardProps extends IDashboardState, RouteProps {}
 
 const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-	if (!props.currentUser) {
+	if (!localStorage.getItem('user')) {
 		return (
 			<div className='visitor-cont'>
 				<div className='visitor-links'>

@@ -21,7 +21,7 @@ interface IUserAuthContainerProps extends IStateProps, IDispatchProps {};
 const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthContainerProps) => {
 
     return (
-		<React.Fragment>
+		<div className='auth-cont'>
 			<Route
 				path='/auth/login'
 				render={(routeProps: RouteComponentProps): React.ReactNode => {
@@ -50,7 +50,7 @@ const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthCo
 					);
 				}}
 			/>
-		</React.Fragment>
+		</div>
 	);
 };
 

@@ -30,21 +30,9 @@ export type SignUpCred = {
 
 const LOGGED_IN_AC = (loggedInUser: IUser): UserActions => ({ type: LOGGED_IN_USER, loggedInUser });
 
-const LOGIN_AC = (): UserActions => ({ type: LOGIN });
-
-const LOGIN_ERR_AC = (login_error: string): UserActions => ({ type: LOGIN_ERROR, login_error });
-
-const LOGIN_SUCCESS_AC = (user: IUser): UserActions => ({ type: LOGIN_SUCCESS, user });
-
-const SIGNUP_AC = (): UserActions => ({ type: SIGNUP });
-
-const SIGNUP_ERR_AC = (signup_error: string): UserActions => ({ type: SIGNUP_ERROR, signup_error });
-
-const SIGNUP_SUCCESS_AC = (newUser: IUser): UserActions => ({ type: SIGNUP_SUCCESS, newUser });
-
 export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch => {
 	try {
-        const loggedInUser = await axios.get('auth/user/');
+        const loggedInUser = await axios.get('/rest_auth/user/');
         localStorage.setItem('user', JSON.stringify(loggedInUser.data, null, 2));
 		dispatch(LOGGED_IN_AC(loggedInUser.data));
 		return true;
@@ -54,30 +42,44 @@ export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch =>
 	}
 };
 
+const LOGIN_AC = (): UserActions => ({ type: LOGIN });
+
+const LOGIN_ERROR_AC = (login_error: string): UserActions => ({ type: LOGIN_ERROR, login_error });
+
+const LOGIN_SUCCESS_AC = (user: IUser): UserActions => ({ type: LOGIN_SUCCESS, user });
+
 export const loginThunk = (credentials: LoginCred): AppThunk<void> => dispatch => {
 	dispatch(LOGIN_AC());
 	setTimeout(async () => {
 		try {
-			await axios.post('auth/login/', credentials);
-            const user = await axios.get('auth/user/');
+			await axios.post('/rest_auth/login/', credentials);
+            const user = await axios.get('/rest_auth/user/');
             localStorage.setItem('user', JSON.stringify(user.data, null, 2));
 			dispatch(LOGIN_SUCCESS_AC(user.data));
 		} catch (error) {
-			dispatch(LOGIN_ERR_AC('Wrong username/password combination'));
+			console.log('login errrrr', error)
+			dispatch(LOGIN_ERROR_AC('Wrong username/password combination'));
 		}
 	}, 2000);
 };
+
+
+const SIGNUP_AC = (): UserActions => ({ type: SIGNUP });
+
+const SIGNUP_ERROR_AC = (signup_error: string): UserActions => ({ type: SIGNUP_ERROR, signup_error });
+
+const SIGNUP_SUCCESS_AC = (newUser: IUser): UserActions => ({ type: SIGNUP_SUCCESS, newUser });
 
 export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatch => {
     dispatch(SIGNUP_AC());
     setTimeout(async () => {
         try {
-            await axios.post('auth/signup/', credentials);
-            const user = await axios.get('auth/user/');
+            await axios.post('/rest_auth/signup/', credentials);
+            const user = await axios.get('/rest_auth/user/');
             localStorage.setItem('user', JSON.stringify(user.data, null, 2));
             dispatch(SIGNUP_SUCCESS_AC(user.data));
         } catch (error) {
-            dispatch(SIGNUP_ERR_AC('Provided credentials are invalid'));
+            dispatch(SIGNUP_ERROR_AC('Provided credentials are invalid'));
         }
     }, 2000);
 };

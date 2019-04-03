@@ -66,8 +66,8 @@ const SignUpForm: React.SFC<ISignUpFormProps> = (props: ISignUpFormProps) => {
     };
     
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
+		<div className='form-cont'>
+			<form onSubmit={handleSubmit}  className='form'>
                 <h1>Signup Here</h1>
                 <Field
 					type='text'
@@ -114,7 +114,7 @@ const SignUpForm: React.SFC<ISignUpFormProps> = (props: ISignUpFormProps) => {
 					errors={FormState.errors.country}
 					onChange={FormState.handleInput}
 				/>
-				<button type='submit'>Submit</button>
+				<button type='submit' className='btn-submit'>Submit</button>
 			</form>
 		</div>
 	);

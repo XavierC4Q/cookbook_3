@@ -1,8 +1,8 @@
 * { margin: 0; padding: 0 }
 
 html, body {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   min-width: 100%;
   min-height: 100%;
 }
@@ -14,22 +14,24 @@ html, body {
 
 /* CONTAINERS */
 .app-cont {
-  height: 100%;
+  height: fit-content;
   width: 100%;
   position: relative;
+  background-color: bisque;
 }
 
 .head-cont {
   width: 100%;
   height: 60px;
   background-color: orangered;
+  display: flex;
+  flex-direction: row;
 }
 
-.visitor-cont {
+.visitor-cont, .auth-cont, .feed-cont {
   width: 100%;
-  height: 900px;
+  height: 1000px;
   position: relative;
-  background-color: cornsilk;
 }
 
 .footer-cont {
@@ -38,20 +40,119 @@ html, body {
   background-color: orangered;
 }
 
+.form-cont {
+  width: 35%;
+  position: absolute;
+  margin: 0 auto;
+  top: 10%;
+  left: 32.5%;
+  right: 32.5%;
+}
+
 /* END CONTAINERS */
 
+
+/* LINKS */
+.head-cont a {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  align-self: center;
+}
+
+.head-cont h3 {
+  padding-left: 5%;
+  height: 100%;
+}
+
 .visitor-links {
-  width: 60%;
+  width: 50%;
   height: 200px;
   position: absolute;
+  display: flex;
   top: 30%;
-  left: 20%;
-  right: 20%;
+  left: 25%;
+  right: 25%;
   background-color: white;
 }
 
 .visitor-links nav {
   width: 100%;
   display: flex;
-  justify-content: space-between
+  justify-content: space-around;
+  align-self: center;
+}
+
+.visitor-links a {
+  text-decoration: none;
+  color: orangered;
+  font-size: 30px;
+}
+
+.footer-links {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: white;
+}
+
+/* END LINKS */
+
+.btn-submit {
+  width: 50%;
+  align-self: center;
+  height: 30px;
+  font-size: 120%;
+  background-color: orangered;
+  color: white;
+  margin: 0;
+}
+
+.btn-submit:hover {
+  background-color: white;
+  color: orangered
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-around;
+  background-color: white;
+}
+
+.form h1 {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: orangered;
+  color: white;
+}
+
+.form section {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.form label {
+  width: 100%;
+  font-size: 30px;
+  color: orangered;
+}
+
+.form input {
+  width: 85%;
+  height: 30px;
+  font-size: 20px;
 }

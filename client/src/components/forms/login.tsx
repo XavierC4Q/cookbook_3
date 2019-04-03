@@ -54,8 +54,8 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 	};
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
+		<div className='form-cont'>
+			<form onSubmit={handleSubmit} className='form'>
 				<h1>Login Here</h1>
 				<Field
 					type='text'
@@ -75,7 +75,7 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 					errors={FormState.errors.password}
 					onChange={FormState.handleInput}
 				/>
-				<button type='submit'>Submit</button>
+				<button className='btn-submit' type='submit'>Submit</button>
 			</form>
 		</div>
 	);
