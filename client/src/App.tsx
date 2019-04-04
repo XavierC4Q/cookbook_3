@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Route, withRouter, RouteProps, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { loggedInThunk } from './store/actions/actionCreators/user';
 
-import DashBoardContainer from './components/containers/dashboardContainer';
-import UserAuthContainer from './components/containers/userAuthContainer';
 import Header from './components/header';
+import Main from './components/main';
 import Footer from './components/footer';
 
 import './App.css';
@@ -25,19 +24,7 @@ const App: React.FC<IAppProps> = (props: IAppProps) => {
 	return (
 		<div className='app-cont'>
 			<Header />
-			<Route
-				exact
-				path='/'
-				render={(routeProps: RouteProps): React.ReactNode => {
-					return <DashBoardContainer {...routeProps} />;
-				}}
-			/>
-			<Route
-				path='/auth'
-				render={(routeProps: RouteComponentProps): React.ReactNode => {
-					return <UserAuthContainer {...routeProps} />;
-				}}
-			/>
+				<Main />
 			<Footer />
 		</div>
 	);

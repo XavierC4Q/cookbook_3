@@ -6,8 +6,9 @@ import { UserActions } from './actions/types/user';
 import { RecipeActions } from './actions/types/recipe';
 import { rootReducer } from './reducers/root';
 import { ThunkAction } from 'redux-thunk';
+import { ProfileActions } from './actions/types/profile';
 
-export type AppActions = UserActions | RecipeActions;
+export type AppActions = UserActions | RecipeActions | ProfileActions;
 
 export type AppState = ReturnType<typeof rootReducer>;
 

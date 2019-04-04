@@ -83,3 +83,20 @@ export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatc
         }
     }, 2000);
 };
+
+
+const LOGOUT_AC = (): UserActions => ({ type: LOGOUT });
+
+const LOGOUT_ERROR_AC = (logout_error: string): UserActions => ({ type: LOGOUT_ERROR, logout_error });
+
+const LOGOUT_SUCCESS_AC = (): UserActions => ({ type: LOGOUT_SUCCESS });
+
+export const logoutThunk = (): AppThunk<void> => async dispatch => {
+	dispatch(LOGOUT_AC());
+	try {
+		await axios.post('/rest_auth/logout/');
+		dispatch(LOGOUT_SUCCESS_AC());
+	} catch (error) {
+		dispatch(LOGOUT_ERROR_AC('Error logging out'));
+	}
+};
