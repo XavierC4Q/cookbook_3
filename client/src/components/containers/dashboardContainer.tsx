@@ -5,11 +5,11 @@ import { IUser } from '../../store/reducers/user';
 
 import Dashboard from '../dashboard';
 
-export interface IDashboardState {
+export interface IDashboardStateProps {
 	currentUser: IUser | null;
 }
 
-interface IDashBoardContainerProps extends IDashboardState {};
+interface IDashBoardContainerProps extends IDashboardStateProps {};
 
 const DashBoardContainer: React.FC<IDashBoardContainerProps> = (props: IDashBoardContainerProps) => {
 	
@@ -20,8 +20,8 @@ const DashBoardContainer: React.FC<IDashBoardContainerProps> = (props: IDashBoar
 	);
 };
 
-const mapStateToProps = (state: AppState): IDashboardState => ({
+const mapStateToProps = (state: AppState): IDashboardStateProps => ({
 	currentUser: state.users.currentUser
 });
 
-export default connect<IDashboardState, {}, {}, AppState>(mapStateToProps)(DashBoardContainer);
+export default connect<IDashboardStateProps, {}, {}, AppState>(mapStateToProps)(DashBoardContainer);

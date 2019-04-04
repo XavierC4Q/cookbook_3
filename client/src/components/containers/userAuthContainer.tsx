@@ -8,7 +8,6 @@ import { loginThunk, signupThunk, LoginCred, SignUpCred } from '../../store/acti
 import LoginForm from '../forms/login';
 import SignUpForm from '../forms/signup';
 
-
 interface IStateProps extends IUserState {}
 
 interface IDispatchProps {
@@ -16,41 +15,24 @@ interface IDispatchProps {
 	signupUser: (credentials: SignUpCred) => void;
 }
 
-interface IUserAuthContainerProps extends IStateProps, IDispatchProps {};
+export interface IUserAuthContainerProps extends IStateProps, IDispatchProps {}
 
 const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthContainerProps) => {
-
-    return (
-		<div className='auth-cont'>
+	return (
+		<React.Fragment>
 			<Route
 				path='/auth/login'
 				render={(routeProps: RouteComponentProps): React.ReactNode => {
-					return (
-						<LoginForm
-							{...routeProps}
-							loading={props.login_loading}
-							loggedIn={props.currentUser}
-							err={props.login_error}
-							login={props.loginUser}
-						/>
-					);
+					return <LoginForm {...routeProps} {...props} />;
 				}}
 			/>
 			<Route
 				path='/auth/signup'
 				render={(routeProps: RouteComponentProps): React.ReactNode => {
-					return (
-						<SignUpForm
-							{...routeProps}
-							loading={props.signup_loading}
-							loggedIn={props.currentUser}
-							err={props.signup_error}
-							signup={props.signupUser}
-						/>
-					);
+					return <SignUpForm {...routeProps} {...props} />;
 				}}
 			/>
-		</div>
+		</React.Fragment>
 	);
 };
 

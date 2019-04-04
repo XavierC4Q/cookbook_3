@@ -1,17 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { IUser } from '../../store/reducers/user';
 import { LoginCred } from '../../store/actions/actionCreators/user';
 import useFormHook, { IFormState } from '../hooks/useForm';
 import * as Yup from 'yup';
 import Field from './field';
+import { IUserAuthContainerProps } from '../containers/userAuthContainer';
 
-interface ILoginFormProps extends RouteComponentProps {
-	loggedIn: IUser | null;
-	loading: boolean;
-	err: string;
-	login: (cred: LoginCred) => void;
-}
+interface ILoginFormProps extends RouteComponentProps, IUserAuthContainerProps {}
 
 interface ILoginState {
 	username: string;
@@ -31,11 +26,11 @@ const validate: Yup.Schema<object> = Yup.object().shape({
 const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 	React.useEffect(
 		(): void => {
-			if (props.loggedIn) {
+			if (props.currentUser) {
 				props.history.push('/');
 			}
 		},
-		[ props.loggedIn ]
+		[ props.currentUser ]
 	);
 
 	const FormState: IFormState = useFormHook(initialState);
@@ -46,7 +41,7 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 		try {
 			const validateOpts: Yup.ValidateOptions = { abortEarly: false };
 			await validate.validate(FormState.inputs, validateOpts);
-			await props.login(FormState.inputs as LoginCred);
+			await props.loginUser(FormState.inputs as LoginCred);
 			FormState.resetForm();
 		} catch (error) {
 			FormState.handleErrors(error.errors as Yup.ValidationError);
@@ -75,7 +70,9 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 					errors={FormState.errors.password}
 					onChange={FormState.handleInput}
 				/>
-				<button className='btn-submit' type='submit'>Submit</button>
+				<button className='btn-submit' type='submit'>
+					Submit
+				</button>
 			</form>
 		</div>
 	);

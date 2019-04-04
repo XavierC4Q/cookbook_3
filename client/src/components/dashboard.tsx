@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { RouteProps, Link } from 'react-router-dom';
-import { IDashboardState } from './containers/dashboardContainer';
+import { IDashboardStateProps } from './containers/dashboardContainer';
 import Feed from './feed';
 
-interface IDashboardProps extends IDashboardState, RouteProps {}
+interface IDashboardProps extends IDashboardStateProps, RouteProps {}
 
 const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
 	if (!localStorage.getItem('user')) {

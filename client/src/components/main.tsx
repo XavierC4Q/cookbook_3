@@ -3,11 +3,12 @@ import { Route, RouteProps, RouteComponentProps } from 'react-router-dom';
 
 import DashBoardContainer from './containers/dashboardContainer';
 import UserAuthContainer from './containers/userAuthContainer';
+import ProfileContainer from './containers/profileContainer';
 
 export interface IMainProps {}
 
 const Main: React.FC<IMainProps> = (props: IMainProps) => (
-	<React.Fragment>
+	<div className='main-cont'>
 		<Route
 			exact
 			path='/'
@@ -21,7 +22,10 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => (
 				return <UserAuthContainer {...routeProps} />;
 			}}
 		/>
-	</React.Fragment>
+		<Route path='/profile/:id' render={(routeProps: RouteComponentProps): React.ReactNode => {
+			return <ProfileContainer {...routeProps} />
+		}} />
+	</div>
 );
 
 export default Main;

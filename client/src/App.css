@@ -28,7 +28,7 @@ html, body {
   flex-direction: row;
 }
 
-.visitor-cont, .auth-cont, .feed-cont {
+.main-cont {
   width: 100%;
   height: 1000px;
   position: relative;
