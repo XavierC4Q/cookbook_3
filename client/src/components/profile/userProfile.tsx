@@ -22,7 +22,7 @@ const UserProfile: React.FC<IUserProfileProps> = (props: IUserProfileProps) => {
 			console.log('FAILED TO LOGOUT');
 		}
 	};
-    
+
 	return (
 		<div>
 			{props.profile_user && <h1>{props.profile_user.username}'s Profile</h1>}

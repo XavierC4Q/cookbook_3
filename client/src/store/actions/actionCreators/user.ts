@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { IUser } from '../../reducers/user';
-import { UserActions } from '../types/user';
 import {
 	LOGGED_IN_USER,
 	LOGIN,
@@ -13,7 +12,7 @@ import {
 	LOGOUT_ERROR,
 	LOGOUT_SUCCESS
 } from '../../constants/user';
-import { AppThunk } from '../../config';
+import { AppThunk, AppActions } from '../../config';
 
 export type LoginCred = {
 	username: string;
@@ -28,7 +27,7 @@ export type SignUpCred = {
 	email: string;
 };
 
-const LOGGED_IN_AC = (loggedInUser: IUser): UserActions => ({ type: LOGGED_IN_USER, loggedInUser });
+const LOGGED_IN_AC = (payload: IUser): AppActions => ({ type: LOGGED_IN_USER, payload });
 
 export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch => {
 	try {
@@ -42,11 +41,11 @@ export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch =>
 	}
 };
 
-const LOGIN_AC = (): UserActions => ({ type: LOGIN });
+const LOGIN_AC = (): AppActions => ({ type: LOGIN });
 
-const LOGIN_ERROR_AC = (login_error: string): UserActions => ({ type: LOGIN_ERROR, login_error });
+const LOGIN_ERROR_AC = (payload: string): AppActions => ({ type: LOGIN_ERROR, payload });
 
-const LOGIN_SUCCESS_AC = (user: IUser): UserActions => ({ type: LOGIN_SUCCESS, user });
+const LOGIN_SUCCESS_AC = (payload: IUser): AppActions => ({ type: LOGIN_SUCCESS, payload });
 
 export const loginThunk = (credentials: LoginCred): AppThunk<void> => dispatch => {
 	dispatch(LOGIN_AC());
@@ -57,18 +56,17 @@ export const loginThunk = (credentials: LoginCred): AppThunk<void> => dispatch =
             localStorage.setItem('user', JSON.stringify(user.data, null, 2));
 			dispatch(LOGIN_SUCCESS_AC(user.data));
 		} catch (error) {
-			console.log('login errrrr', error)
 			dispatch(LOGIN_ERROR_AC('Wrong username/password combination'));
 		}
 	}, 2000);
 };
 
 
-const SIGNUP_AC = (): UserActions => ({ type: SIGNUP });
+const SIGNUP_AC = (): AppActions => ({ type: SIGNUP });
 
-const SIGNUP_ERROR_AC = (signup_error: string): UserActions => ({ type: SIGNUP_ERROR, signup_error });
+const SIGNUP_ERROR_AC = (payload: string): AppActions => ({ type: SIGNUP_ERROR, payload });
 
-const SIGNUP_SUCCESS_AC = (newUser: IUser): UserActions => ({ type: SIGNUP_SUCCESS, newUser });
+const SIGNUP_SUCCESS_AC = (payload: IUser): AppActions => ({ type: SIGNUP_SUCCESS, payload });
 
 export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatch => {
     dispatch(SIGNUP_AC());
@@ -85,11 +83,11 @@ export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatc
 };
 
 
-const LOGOUT_AC = (): UserActions => ({ type: LOGOUT });
+const LOGOUT_AC = (): AppActions => ({ type: LOGOUT });
 
-const LOGOUT_ERROR_AC = (logout_error: string): UserActions => ({ type: LOGOUT_ERROR, logout_error });
+const LOGOUT_ERROR_AC = (payload: string): AppActions => ({ type: LOGOUT_ERROR, payload });
 
-const LOGOUT_SUCCESS_AC = (): UserActions => ({ type: LOGOUT_SUCCESS });
+const LOGOUT_SUCCESS_AC = (): AppActions => ({ type: LOGOUT_SUCCESS });
 
 export const logoutThunk = (): AppThunk<void> => async dispatch => {
 	dispatch(LOGOUT_AC());

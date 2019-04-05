@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
-import { ProfileActions } from '../actions/types/profile';
 import { IUser } from './user';
 import { GET_SINGLE_USER, EDIT_USER, REMOVE_USER, LOADING_SINGLE_USER, SINGLE_USER_ERROR } from '../constants/profile';
+import { AppActions } from '../config';
 
 export interface IProfileState {
 	profile_user: IUser | null;
@@ -15,12 +15,12 @@ const initialState: IProfileState = {
 	user_error: ''
 };
 
-export const profileReducer: Reducer<IProfileState, ProfileActions> = (state = initialState, actions) => {
+export const profileReducer: Reducer<IProfileState, AppActions> = (state = initialState, actions) => {
 	switch (actions.type) {
 		case GET_SINGLE_USER:
 			return {
 				...state,
-				profile_user: actions.user,
+				profile_user: actions.payload,
 				loading_profile_user: false
 			};
 		case LOADING_SINGLE_USER:
@@ -32,7 +32,7 @@ export const profileReducer: Reducer<IProfileState, ProfileActions> = (state = i
 		case EDIT_USER:
 			return {
 				...state,
-				profile_user: actions.updated_user
+				profile_user: actions.payload
 			};
 		case REMOVE_USER:
 			return {
@@ -42,7 +42,7 @@ export const profileReducer: Reducer<IProfileState, ProfileActions> = (state = i
 		case SINGLE_USER_ERROR:
 			return {
 				...state,
-				user_error: actions.user_error
+				user_error: actions.payload
 			};
 		default:
 			return state;

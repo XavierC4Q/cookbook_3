@@ -10,45 +10,16 @@ import {
 	LOGOUT_ERROR,
 	LOGOUT_SUCCESS
 } from '../../constants/user';
-import { Action } from 'redux';
-import { IUser } from '../../reducers/user';
 
-interface ILoggedInUser extends Action<typeof LOGGED_IN_USER> {
-	loggedInUser: IUser;
-}
+export type UserActions =
+	| typeof LOGGED_IN_USER
+	| typeof LOGIN
+	| typeof LOGIN_ERROR
+	| typeof LOGIN_SUCCESS
+	| typeof SIGNUP
+	| typeof SIGNUP_ERROR
+	| typeof SIGNUP_SUCCESS
+	| typeof LOGOUT 
+	| typeof LOGOUT_ERROR
+	| typeof LOGOUT_SUCCESS;
 
-interface ILoginAction extends Action<typeof LOGIN> {}
-
-interface ILoginSuccessAction extends Action<typeof LOGIN_SUCCESS> {
-	user: IUser;
-}
-
-interface ILoginErrorAction extends Action<typeof LOGIN_ERROR> {
-	login_error: string;
-}
-
-interface ISignUpAction extends Action<typeof SIGNUP> {}
-
-interface ISignUpSuccessAction extends Action<typeof SIGNUP_SUCCESS> {
-	newUser: IUser;
-}
-
-interface ISignUpErrorAction extends Action<typeof SIGNUP_ERROR> {
-	signup_error: string;
-}
-
-interface ILogoutAction extends Action<typeof LOGOUT> {}
-
-interface ILogoutSuccessAction extends Action<typeof LOGOUT_SUCCESS> {}
-
-interface ILogoutErrorAction extends Action<typeof LOGOUT_ERROR> {
-	logout_error: string;
-}
-
-type LoginUnion = ILoginAction | ILoginSuccessAction | ILoginErrorAction;
-
-type SignUpUnion = ISignUpAction | ISignUpSuccessAction | ISignUpErrorAction;
-
-type LogoutUnion = ILogoutAction | ILogoutSuccessAction | ILogoutErrorAction;
-
-export type UserActions = LoginUnion | SignUpUnion | LogoutUnion | ILoggedInUser;

@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import { ADD_RECIPE, ALL_USER_RECIPES, EDIT_RECIPE, REMOVE_RECIPE, SINGLE_RECIPE } from '../constants/recipe';
-import { RecipeActions } from '../actions/types/recipe';
 import { IUser } from './user';
+import { AppActions } from '../config';
 
 export interface IRecipe {
 	owner: IUser;
@@ -45,18 +45,18 @@ const initialState: IRecipeState = {
     add_recipe_pending: false
 };
 
-export const recipeReducer: Reducer<IRecipeState, RecipeActions> = (state = initialState, action) => {
+export const recipeReducer: Reducer<IRecipeState, AppActions> = (state = initialState, action) => {
     switch (action.type) {
         case ALL_USER_RECIPES:
             return {
                 ...state,
-                all_user_recipes: action.allRecipes,
+                all_user_recipes: action.payload,
                 all_recipes_loading: false
             }
         case ADD_RECIPE:
             return {
                 ...state,
-                all_user_recipes: [...state.all_user_recipes, action.newRecipe],
+                all_user_recipes: [...state.all_user_recipes, action.payload],
                 add_recipe_success: true,
                 add_recipe_pending: false
             }
@@ -75,7 +75,7 @@ export const recipeReducer: Reducer<IRecipeState, RecipeActions> = (state = init
         case SINGLE_RECIPE:
             return {
                 ...state,
-                single_recipe: action.recipe,
+                single_recipe: action.payload,
                 single_recipe_loading: false
             }
         default:

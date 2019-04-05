@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { UserActions } from '../actions/types/user';
 import {
 	LOGIN,
 	LOGGED_IN_USER,
@@ -12,6 +11,7 @@ import {
 	LOGOUT_ERROR,
 	LOGOUT_SUCCESS
 } from '../constants/user';
+import { AppActions } from '../config';
 
 export interface IUser {
 	id: number | undefined;
@@ -44,12 +44,12 @@ const initialState: IUserState = {
 	logout_error: ''
 };
 
-export const userReducer: Reducer<IUserState, UserActions> = (state = initialState, action) => {
+export const userReducer: Reducer<IUserState, AppActions> = (state = initialState, action) => {
 	switch (action.type) {
 		case LOGGED_IN_USER:
 			return {
 				...state,
-				currentUser: action.loggedInUser
+				currentUser: action.payload
 			};
 		case LOGIN:
 			return {
@@ -61,13 +61,13 @@ export const userReducer: Reducer<IUserState, UserActions> = (state = initialSta
 			return {
 				...state,
 				login_loading: false,
-				login_error: action.login_error
+				login_error: action.payload
 			};
 		case LOGIN_SUCCESS:
 			return {
 				...state,
 				login_loading: false,
-				currentUser: action.user
+				currentUser: action.payload
 			};
 		case SIGNUP:
 			return {
@@ -78,14 +78,14 @@ export const userReducer: Reducer<IUserState, UserActions> = (state = initialSta
 		case SIGNUP_SUCCESS:
 			return {
 				...state,
-				currentUser: action.newUser,
+				currentUser: action.payload,
 				signup_loading: false
 			};
 		case SIGNUP_ERROR:
 			return {
 				...state,
 				signup_loading: false,
-				signup_error: action.signup_error
+				signup_error: action.payload
 			};
 		case LOGOUT:
 			return {
@@ -102,7 +102,7 @@ export const userReducer: Reducer<IUserState, UserActions> = (state = initialSta
 		case LOGOUT_ERROR:
 			return {
 				...state,
-				logout_error: action.logout_error,
+				logout_error: action.payload,
 				logout_loading: false
 			};
 		default:

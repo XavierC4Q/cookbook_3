@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { ProfileActions } from '../types/profile';
-import { AppThunk } from '../../config';
+import { AppThunk, AppActions } from '../../config';
 import {
 	GET_SINGLE_USER,
 	EDIT_USER,
@@ -11,11 +10,11 @@ import {
 import { IUser } from '../../reducers/user';
 
 
-const LOADING_SINGLE_USER_AC = (): ProfileActions => ({ type: LOADING_SINGLE_USER });
+const LOADING_SINGLE_USER_AC = (): AppActions => ({ type: LOADING_SINGLE_USER });
 
-const SINGLE_USER_ERROR_AC = (user_error: string): ProfileActions => ({ type: SINGLE_USER_ERROR, user_error });
+const SINGLE_USER_ERROR_AC = (payload: string): AppActions => ({ type: SINGLE_USER_ERROR, payload });
 
-const GET_SINGLE_USER_AC = (user: IUser): ProfileActions => ({ type: GET_SINGLE_USER, user });
+const GET_SINGLE_USER_AC = (payload: IUser): AppActions => ({ type: GET_SINGLE_USER, payload });
 
 export const getSingleUserThunk = (id: string): AppThunk<Promise<void>> => async dispatch => {
 	dispatch(LOADING_SINGLE_USER_AC());
@@ -28,7 +27,7 @@ export const getSingleUserThunk = (id: string): AppThunk<Promise<void>> => async
 };
 
 
-const EDIT_USER_AC = (updated_user: IUser): ProfileActions => ({ type: EDIT_USER, updated_user });
+const EDIT_USER_AC = (payload: IUser): AppActions => ({ type: EDIT_USER, payload });
 
 export const editUserThunk = (updateInfo: Partial<IUser>): AppThunk<Promise<void>> => async dispatch => {
 	try {

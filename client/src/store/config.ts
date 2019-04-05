@@ -2,13 +2,11 @@ import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { UserActions } from './actions/types/user';
-import { RecipeActions } from './actions/types/recipe';
 import { rootReducer } from './reducers/root';
 import { ThunkAction } from 'redux-thunk';
-import { ProfileActions } from './actions/types/profile';
+import { PayloadAction } from './actions/types';
 
-export type AppActions = UserActions | RecipeActions | ProfileActions;
+export type AppActions = PayloadAction<any>;
 
 export type AppState = ReturnType<typeof rootReducer>;
 
