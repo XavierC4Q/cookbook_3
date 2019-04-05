@@ -9,6 +9,10 @@ import { logoutThunk } from '../../store/actions/actionCreators/user';
 import { getSingleUserThunk, editUserThunk } from '../../store/actions/actionCreators/profile';
 import UserProfile from '../profile/userProfile';
 
+interface Match {
+	id: string;
+}
+
 interface IProfileContainerStateProps extends IProfileState, Partial<IUserState> {}
 
 interface IDispatchProps {
@@ -24,8 +28,8 @@ const ProfileContainer: React.FC<IProfileContainerProps> = (props: IProfileConta
 		<React.Fragment>
 			<Route
 				path='/profile/:id'
-				render={(routeProps: RouteComponentProps): React.ReactNode => (
-					<UserProfile {...routeProps} {...props} />
+				render={(routeProps: RouteComponentProps<Match>): React.ReactNode => (
+					<UserProfile {...routeProps} {...props} id={routeProps.match.params.id}/>
 				)}
 			/>
 		</React.Fragment>

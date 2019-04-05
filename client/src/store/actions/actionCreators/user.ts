@@ -95,6 +95,7 @@ export const logoutThunk = (): AppThunk<void> => async dispatch => {
 	dispatch(LOGOUT_AC());
 	try {
 		await axios.post('/rest_auth/logout/');
+		localStorage.removeItem('user');
 		dispatch(LOGOUT_SUCCESS_AC());
 	} catch (error) {
 		dispatch(LOGOUT_ERROR_AC('Error logging out'));
