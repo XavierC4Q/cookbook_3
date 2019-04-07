@@ -1,16 +1,5 @@
 import { Reducer } from 'redux';
-import {
-	LOGIN,
-	LOGGED_IN_USER,
-	LOGIN_SUCCESS,
-	LOGIN_ERROR,
-	SIGNUP,
-	SIGNUP_SUCCESS,
-	SIGNUP_ERROR,
-	LOGOUT,
-	LOGOUT_ERROR,
-	LOGOUT_SUCCESS
-} from '../constants/user';
+import * as types from '../constants/user';
 import { AppActions } from '../config';
 
 export interface IUser {
@@ -46,60 +35,60 @@ const initialState: IUserState = {
 
 export const userReducer: Reducer<IUserState, AppActions> = (state = initialState, action) => {
 	switch (action.type) {
-		case LOGGED_IN_USER:
+		case types.LOGGED_IN_USER:
 			return {
 				...state,
 				currentUser: action.payload
 			};
-		case LOGIN:
+		case types.LOGIN:
 			return {
 				...state,
 				login_loading: true,
 				login_error: ''
 			};
-		case LOGIN_ERROR:
+		case types.LOGIN_ERROR:
 			return {
 				...state,
 				login_loading: false,
 				login_error: action.payload
 			};
-		case LOGIN_SUCCESS:
+		case types.LOGIN_SUCCESS:
 			return {
 				...state,
 				login_loading: false,
 				currentUser: action.payload
 			};
-		case SIGNUP:
+		case types.SIGNUP:
 			return {
 				...state,
 				signup_loading: true,
 				signup_error: ''
 			};
-		case SIGNUP_SUCCESS:
+		case types.SIGNUP_SUCCESS:
 			return {
 				...state,
 				currentUser: action.payload,
 				signup_loading: false
 			};
-		case SIGNUP_ERROR:
+		case types.SIGNUP_ERROR:
 			return {
 				...state,
 				signup_loading: false,
 				signup_error: action.payload
 			};
-		case LOGOUT:
+		case types.LOGOUT:
 			return {
 				...state,
 				logout_loading: true,
 				logout_error: ''
 			};
-		case LOGOUT_SUCCESS:
+		case types.LOGOUT_SUCCESS:
 			return {
 				...state,
 				currentUser: null,
 				logout_loading: false
 			};
-		case LOGOUT_ERROR:
+		case types.LOGOUT_ERROR:
 			return {
 				...state,
 				logout_error: action.payload,

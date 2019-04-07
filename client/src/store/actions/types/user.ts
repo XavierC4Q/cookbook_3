@@ -1,25 +1,14 @@
-import {
-	LOGGED_IN_USER,
-	LOGIN,
-	LOGIN_ERROR,
-	LOGIN_SUCCESS,
-	SIGNUP,
-	SIGNUP_ERROR,
-	SIGNUP_SUCCESS,
-	LOGOUT,
-	LOGOUT_ERROR,
-	LOGOUT_SUCCESS
-} from '../../constants/user';
+import * as types from '../../constants/user';
 
-export type UserActions =
-	| typeof LOGGED_IN_USER
-	| typeof LOGIN
-	| typeof LOGIN_ERROR
-	| typeof LOGIN_SUCCESS
-	| typeof SIGNUP
-	| typeof SIGNUP_ERROR
-	| typeof SIGNUP_SUCCESS
-	| typeof LOGOUT 
-	| typeof LOGOUT_ERROR
-	| typeof LOGOUT_SUCCESS;
+export type UserActionTypes =
+	| typeof types.LOGGED_IN_USER
+	| typeof types.LOGIN
+	| typeof types.LOGIN_ERROR
+	| typeof types.LOGIN_SUCCESS
+	| typeof types.SIGNUP
+	| typeof types.SIGNUP_ERROR
+	| typeof types.SIGNUP_SUCCESS
+	| typeof types.LOGOUT 
+	| typeof types.LOGOUT_ERROR
+	| typeof types.LOGOUT_SUCCESS;
 

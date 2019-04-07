@@ -4,9 +4,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { rootReducer } from './reducers/root';
 import { ThunkAction } from 'redux-thunk';
-import { PayloadAction } from './actions/types';
+import { AllTypes } from './actions/types';
 
-export type AppActions = PayloadAction<any>;
+interface IAppActions {
+	type: AllTypes;
+	readonly payload?: any
+}
+
+export type AppActions = IAppActions;
 
 export type AppState = ReturnType<typeof rootReducer>;
 

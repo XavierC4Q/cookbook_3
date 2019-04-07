@@ -1,14 +1,8 @@
-import {
-	GET_SINGLE_USER,
-	EDIT_USER,
-	REMOVE_USER,
-	LOADING_SINGLE_USER,
-	SINGLE_USER_ERROR
-} from '../../constants/profile';
+import * as types from '../../constants/profile';
 
-export type ProfileActions =
-	| typeof GET_SINGLE_USER
-	| typeof EDIT_USER
-	| typeof REMOVE_USER
-	| typeof LOADING_SINGLE_USER
-	| typeof SINGLE_USER_ERROR;
+export type ProfileActionTypes =
+	| typeof types.GET_SINGLE_USER
+	| typeof types.EDIT_USER
+	| typeof types.REMOVE_USER
+	| typeof types.LOADING_SINGLE_USER
+	| typeof types.SINGLE_USER_ERROR;
