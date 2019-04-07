@@ -1,17 +1,6 @@
 import axios from 'axios';
 import { IUser } from '../../reducers/user';
-import {
-	LOGGED_IN_USER,
-	LOGIN,
-	LOGIN_ERROR,
-	LOGIN_SUCCESS,
-	SIGNUP,
-	SIGNUP_ERROR,
-	SIGNUP_SUCCESS,
-	LOGOUT,
-	LOGOUT_ERROR,
-	LOGOUT_SUCCESS
-} from '../../constants/user';
+import * as types from '../../constants/user';
 import { AppThunk, AppActions } from '../../config';
 
 export type LoginCred = {
@@ -27,7 +16,7 @@ export type SignUpCred = {
 	email: string;
 };
 
-const LOGGED_IN_AC = (payload: IUser): AppActions => ({ type: LOGGED_IN_USER, payload });
+const LOGGED_IN_AC = (payload: IUser): AppActions => ({ type: types.LOGGED_IN_USER, payload });
 
 export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch => {
 	try {
@@ -41,11 +30,11 @@ export const loggedInThunk = (): AppThunk<Promise<boolean>> => async dispatch =>
 	}
 };
 
-const LOGIN_AC = (): AppActions => ({ type: LOGIN });
+const LOGIN_AC = (): AppActions => ({ type: types.LOGIN });
 
-const LOGIN_ERROR_AC = (payload: string): AppActions => ({ type: LOGIN_ERROR, payload });
+const LOGIN_ERROR_AC = (payload: string): AppActions => ({ type: types.LOGIN_ERROR, payload });
 
-const LOGIN_SUCCESS_AC = (payload: IUser): AppActions => ({ type: LOGIN_SUCCESS, payload });
+const LOGIN_SUCCESS_AC = (payload: IUser): AppActions => ({ type: types.LOGIN_SUCCESS, payload });
 
 export const loginThunk = (credentials: LoginCred): AppThunk<void> => dispatch => {
 	dispatch(LOGIN_AC());
@@ -62,11 +51,11 @@ export const loginThunk = (credentials: LoginCred): AppThunk<void> => dispatch =
 };
 
 
-const SIGNUP_AC = (): AppActions => ({ type: SIGNUP });
+const SIGNUP_AC = (): AppActions => ({ type: types.SIGNUP });
 
-const SIGNUP_ERROR_AC = (payload: string): AppActions => ({ type: SIGNUP_ERROR, payload });
+const SIGNUP_ERROR_AC = (payload: string): AppActions => ({ type: types.SIGNUP_ERROR, payload });
 
-const SIGNUP_SUCCESS_AC = (payload: IUser): AppActions => ({ type: SIGNUP_SUCCESS, payload });
+const SIGNUP_SUCCESS_AC = (payload: IUser): AppActions => ({ type: types.SIGNUP_SUCCESS, payload });
 
 export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatch => {
     dispatch(SIGNUP_AC());
@@ -83,11 +72,11 @@ export const signupThunk  = (credentials: SignUpCred): AppThunk<void> => dispatc
 };
 
 
-const LOGOUT_AC = (): AppActions => ({ type: LOGOUT });
+const LOGOUT_AC = (): AppActions => ({ type: types.LOGOUT });
 
-const LOGOUT_ERROR_AC = (payload: string): AppActions => ({ type: LOGOUT_ERROR, payload });
+const LOGOUT_ERROR_AC = (payload: string): AppActions => ({ type: types.LOGOUT_ERROR, payload });
 
-const LOGOUT_SUCCESS_AC = (): AppActions => ({ type: LOGOUT_SUCCESS });
+const LOGOUT_SUCCESS_AC = (): AppActions => ({ type: types.LOGOUT_SUCCESS });
 
 export const logoutThunk = (): AppThunk<void> => async dispatch => {
 	dispatch(LOGOUT_AC());
