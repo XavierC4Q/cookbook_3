@@ -36,6 +36,7 @@ class UserSerializer (serializers.ModelSerializer):
 class RecipeSerializer (serializers.ModelSerializer):
 
     favorite_count = serializers.SerializerMethodField(read_only=True)
+    owner = UserSerializer()
 
     def get_favorite_count(self, obj):
         return Favorite.objects.filter(recipe=obj.id).count()
@@ -44,20 +45,29 @@ class RecipeSerializer (serializers.ModelSerializer):
 
         model = Recipe
         fields = '__all__'
+        depth = 1
 
 
 class FollowSerializer (serializers.ModelSerializer):
+
+    user = UserSerializer()
+    follows = UserSerializer()
 
     class Meta:
 
         model = Follow
         fields = '__all__'
         ordering = ['followed_on']
+        depth = 1
 
 class FavoriteSerializer (serializers.ModelSerializer):
+
+    favorited_by = UserSerializer()
+    recipe = RecipeSerializer()
 
     class Meta:
 
         model = Favorite
         fields = '__all__'
         ordering = ['favorited_on']
+        depth = 1

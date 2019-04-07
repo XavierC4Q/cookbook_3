@@ -7,18 +7,22 @@ import { IUser, IUserState } from '../../store/reducers/user';
 import { IProfileState } from '../../store/reducers/profile';
 import { logoutThunk } from '../../store/actions/actionCreators/user';
 import { getSingleUserThunk, editUserThunk } from '../../store/actions/actionCreators/profile';
-import UserProfile from '../profile/userProfile';
+import { getAllUserRecipesThunk, getSingleRecipeThunk } from '../../store/actions/actionCreators/recipe';
+import { IRecipeState } from '../../store/reducers/recipe';
+import UserRecipes from '../profile/userRecipes';
 
 interface Match {
 	id: string;
 }
 
-interface IProfileContainerStateProps extends IProfileState, Partial<IUserState> {}
+interface IProfileContainerStateProps extends IProfileState, Partial<IRecipeState>, Partial<IUserState> {}
 
 interface IDispatchProps {
 	logutUser: () => void;
 	getSingleUserInfo: (id: string) => void;
 	editProfile: (update_info: Partial<IUser>) => void;
+	getAllRecipes: (id: string) => void;
+	getSingleRecipe: (recipeId: string) => void;
 }
 
 export interface IProfileContainerProps extends IProfileContainerStateProps, IDispatchProps {}
@@ -29,7 +33,16 @@ const ProfileContainer: React.FC<IProfileContainerProps> = (props: IProfileConta
 			<Route
 				path='/profile/:id'
 				render={(routeProps: RouteComponentProps<Match>): React.ReactNode => (
-					<UserProfile {...routeProps} {...props} id={routeProps.match.params.id}/>
+					<UserRecipes
+						{...routeProps}
+						{...props}
+						id={routeProps.match.params.id}
+						currentUser={props.currentUser || null}
+						profileOwner={props.profile_user}
+						recipes={props.all_user_recipes || []}
+						getProfileOwner={props.getSingleUserInfo}
+						getRecipes={props.getAllRecipes}
+					/>
 				)}
 			/>
 		</React.Fragment>
@@ -41,7 +54,13 @@ const mapStateToProps = (state: AppState): IProfileContainerStateProps => {
 		currentUser: state.users.currentUser,
 		profile_user: state.profile.profile_user,
 		loading_profile_user: state.profile.loading_profile_user,
-		user_error: state.profile.user_error
+		user_error: state.profile.user_error,
+		all_user_recipes: state.recipe.all_user_recipes,
+		all_recipes_err: state.recipe.all_recipes_err,
+		all_recipes_loading: state.recipe.all_recipes_loading,
+		single_recipe: state.recipe.single_recipe,
+		single_recipe_loading: state.recipe.single_recipe_loading,
+		single_recipe_err: state.recipe.single_recipe_err
 	};
 };
 
@@ -49,7 +68,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProp
 	return {
 		logutUser: () => dispatch(logoutThunk()),
 		getSingleUserInfo: id => dispatch(getSingleUserThunk(id)),
-		editProfile: update_info => dispatch(editUserThunk(update_info))
+		editProfile: update_info => dispatch(editUserThunk(update_info)),
+		getAllRecipes: id => dispatch(getAllUserRecipesThunk(id)),
+		getSingleRecipe: recipeId => dispatch(getSingleRecipeThunk(recipeId))
 	};
 };
 

@@ -34,6 +34,7 @@ class Recipe (models.Model):
         models.CharField(max_length=50, blank=False, null=False),
         blank=False, null=False
     )
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.recipe_name

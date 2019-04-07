@@ -7,7 +7,7 @@ export const getAllUserRecipesThunk = (id: string): AppThunk<void> => dispatch =
 	dispatch<AppActions>({ type: types.LOADING_RECIPES });
 	setTimeout(async () => {
 		try {
-            const allRecipes = await axios.get(`/cookbook/recipe/user_recipes/${id}`);
+            const allRecipes = await axios.get(`/cookbook/recipe/user_recipes/?user_id=${id}`);
             dispatch<AppActions>({ type: types.ALL_USER_RECIPES, payload: allRecipes.data });
 		} catch (error) {
             dispatch<AppActions>({ type: types.ALL_RECIPES_ERROR, payload: 'Failed to load user recipes'});

@@ -9,6 +9,9 @@ export interface IRecipe {
 	created: Date;
 	updated: Date;
 	ingredients: Array<string>;
+	favorite_count: number;
+	description: string | null;
+	image?: string | null;
 }
 
 export interface IRecipeState {

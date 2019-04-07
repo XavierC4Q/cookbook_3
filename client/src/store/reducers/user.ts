@@ -10,6 +10,10 @@ export interface IUser {
 	country: string;
 	date_joined: Date;
 	last_login: Date;
+	total_followers: number;
+	total_recipes: number;
+	total_favorites: number;
+	profile_image?: string | null;
 }
 
 export interface IUserState {
