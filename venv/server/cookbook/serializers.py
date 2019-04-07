@@ -28,7 +28,8 @@ class UserSerializer (serializers.ModelSerializer):
             'id', 
             'total_favorites', 
             'total_recipes',
-            'total_followers'
+            'total_followers',
+            'profile_image'
             )
         ordering = ['-id']
 

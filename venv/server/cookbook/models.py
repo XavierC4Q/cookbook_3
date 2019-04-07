@@ -7,6 +7,7 @@ class User (AbstractUser):
     username = models.CharField(max_length=16, blank=False, null=False, unique=True)
     email = models.EmailField(blank=True, null=True)
     country = models.CharField(max_length=30, blank=False, null=False)
+    profile_image = models.ImageField(upload_to='uploads/users', blank=True, null=True)
 
 
     def __str__(self):
@@ -28,6 +29,7 @@ class Recipe (models.Model):
     recipe_name = models.CharField(max_length=50, blank=False, null=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='uploads/recipes', blank=True, null=True)
     ingredients = ArrayField(
         models.CharField(max_length=50, blank=False, null=False),
         blank=False, null=False
