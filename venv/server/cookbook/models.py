@@ -33,3 +33,14 @@ class Recipe (models.Model):
         blank=False, null=False
     )
 
+    def __str__(self):
+        return self.recipe_name
+
+class Favorite (models.Model):
+
+    favorited_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    favorited_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.recipe.recipe_name + ' favorited by ' + self.favorited_by.username

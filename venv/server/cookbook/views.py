@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import User, Recipe, Follow
-from .serializers import UserSerializer, RecipeSerializer, FollowSerializer
+from .models import User, Recipe, Follow, Favorite
+from .serializers import UserSerializer, RecipeSerializer, FollowSerializer, FavoriteSerializer
 
 
 class UserViewSet (viewsets.ModelViewSet):
@@ -44,4 +44,9 @@ class FollowViewSet (viewsets.ModelViewSet):
 
     serializer_class = FollowSerializer
     queryset = Follow.objects.all()
+
+class FavoriteViewSet (viewsets.ModelViewSet):
+    
+    serializer_class = FavoriteSerializer
+    queryset = Favorite.objects.all()
     

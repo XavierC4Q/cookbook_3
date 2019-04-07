@@ -17,14 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path , include
 from rest_framework.routers import DefaultRouter
-
-from cookbook.views import UserViewSet, RecipeViewSet, FollowViewSet
+from cookbook.views import UserViewSet, RecipeViewSet, FollowViewSet, FavoriteViewSet
 
 router = DefaultRouter()
 
 router.register(r'user', UserViewSet, 'User')
 router.register(r'recipe', RecipeViewSet, 'Recipe')
 router.register(r'follow', FollowViewSet, 'Follow')
+router.register(r'favorite', FavoriteViewSet, 'Favorite')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
