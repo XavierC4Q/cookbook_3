@@ -2,48 +2,55 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 
-class User (AbstractUser):
+
+class User(AbstractUser):
 
     username = models.CharField(max_length=16, blank=False, null=False, unique=True)
     email = models.EmailField(blank=True, null=True)
     country = models.CharField(max_length=30, blank=False, null=False)
-    profile_image = models.ImageField(upload_to='uploads/users', blank=True, null=True)
-
+    profile_image = models.ImageField(upload_to="uploads/users", blank=True, null=True)
 
     def __str__(self):
         return self.username
 
-class Follow (models.Model):
 
-    user = models.ForeignKey(User, related_name='user_follows', on_delete=models.CASCADE)
-    follows = models.ForeignKey(User, related_name='follows_user', on_delete=models.CASCADE)
+class Follow(models.Model):
+
+    user = models.ForeignKey(
+        User, related_name="user_follows", on_delete=models.CASCADE
+    )
+    follows = models.ForeignKey(
+        User, related_name="follows_user", on_delete=models.CASCADE
+    )
     followed_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username + ' follows ' + self.follows.username
+        return self.user.username + " follows " + self.follows.username
 
 
-class Recipe (models.Model):
+class Recipe(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe_name = models.CharField(max_length=50, blank=False, null=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='uploads/recipes', blank=True, null=True)
+    image = models.ImageField(upload_to="uploads/recipes", blank=True, null=True)
     ingredients = ArrayField(
         models.CharField(max_length=50, blank=False, null=False),
-        blank=False, null=False
+        blank=False,
+        null=False,
     )
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.recipe_name
 
-class Favorite (models.Model):
+
+class Favorite(models.Model):
 
     favorited_by = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     favorited_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.recipe.recipe_name + ' favorited by ' + self.favorited_by.username
+        return self.recipe.recipe_name + " favorited by " + self.favorited_by.username

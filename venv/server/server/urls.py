@@ -15,20 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from cookbook.views import UserViewSet, RecipeViewSet, FollowViewSet, FavoriteViewSet
 
 router = DefaultRouter()
 
-router.register(r'user', UserViewSet, 'User')
-router.register(r'recipe', RecipeViewSet, 'Recipe')
-router.register(r'follow', FollowViewSet, 'Follow')
-router.register(r'favorite', FavoriteViewSet, 'Favorite')
+router.register(r"user", UserViewSet, "User")
+router.register(r"recipe", RecipeViewSet, "Recipe")
+router.register(r"follow", FollowViewSet, "Follow")
+router.register(r"favorite", FavoriteViewSet, "Favorite")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r'^rest_auth/', include('rest_auth.urls')),
-    url(r'^rest_auth/signup/', include('rest_auth.registration.urls')),
-    url(r'^cookbook/', include(router.urls))
+    path("admin/", admin.site.urls),
+    url(r"^rest_auth/", include("rest_auth.urls")),
+    url(r"^rest_auth/signup/", include("rest_auth.registration.urls")),
+    url(r"^cookbook/", include(router.urls)),
 ]
