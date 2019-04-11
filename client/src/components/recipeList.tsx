@@ -8,8 +8,6 @@ export interface IRecipeListProps {
     recipes: Array<IRecipe>;
     currentUser: IUser | null;
     profileOwner: IUser | null;
-    // removeRecipe: () => void;
-    // editRecipe: (updatedRecipe: Partial<IRecipe>) => void;
 }
 
 const renderRecipes = (recipes: Array<IRecipe>): React.ReactNodeArray => {
@@ -17,9 +15,9 @@ const renderRecipes = (recipes: Array<IRecipe>): React.ReactNodeArray => {
 };
  
 const RecipeList: React.FC<IRecipeListProps> = (props: IRecipeListProps) => {
-    return (<React.Fragment>
+    return (<div className='recipe-list'>
             {renderRecipes(props.recipes)}
-        </React.Fragment>);
+        </div>);
 }
  
 export default RecipeList;

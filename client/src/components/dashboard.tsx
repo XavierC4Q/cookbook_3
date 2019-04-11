@@ -11,17 +11,13 @@ const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
 			<div className='visitor-cont'>
 				<div className='visitor-links'>
 					<nav>
-						<Link to='/auth/login'>Login Here</Link>
-						{' '}
-						<Link to='/auth/signup'>Signup Here</Link>
+						<Link to='/auth/login'>Login Here</Link> <Link to='/auth/signup'>Signup Here</Link>
 					</nav>
 				</div>
 			</div>
-		)
+		);
 	}
-	return (
-		<Feed />
-	);
+	return <Feed />;
 };
 
 export default Dashboard;

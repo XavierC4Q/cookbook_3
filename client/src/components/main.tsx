@@ -5,6 +5,10 @@ import DashBoardContainer from './containers/dashboardContainer';
 import UserAuthContainer from './containers/userAuthContainer';
 import ProfileContainer from './containers/profileContainer';
 
+interface Match {
+	id: string;
+}
+
 export interface IMainProps {}
 
 const Main: React.FC<IMainProps> = (props: IMainProps) => (
@@ -22,8 +26,8 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => (
 				return <UserAuthContainer {...routeProps} />;
 			}}
 		/>
-		<Route path='/profile/:id' render={(routeProps: RouteComponentProps): React.ReactNode => {
-			return <ProfileContainer {...routeProps} />
+		<Route path='/profile/:id' render={(routeProps: RouteComponentProps<Match>): React.ReactNode => {
+			return <ProfileContainer {...routeProps} id={routeProps.match.params.id}/>
 		}} />
 	</div>
 );

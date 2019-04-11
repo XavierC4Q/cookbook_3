@@ -5,21 +5,21 @@ import RecipeList from '../recipeList';
 import { RouteComponentProps } from 'react-router';
 
 export interface IUserRecipesProps extends RouteComponentProps {
-    id: string;
 	currentUser: IUser | null;
 	profileOwner: IUser | null;
 	recipes: Array<IRecipe>;
-	getProfileOwner: (id: string) => void;
-	getRecipes: (userId: string) => void;
 }
 
+const RecipeHeader = (currentUser: IUser | null, profileOwner: IUser | null): React.ReactNode => {
+    if (!profileOwner) return <h1>NOT FOUND</h1>;
+    if (currentUser && currentUser.pk === profileOwner.id) return <h1>Your Recipes</h1>;
+    return <h1>{profileOwner.username}'s Recipes</h1>
+};
+
 const UserRecipes: React.FC<IUserRecipesProps> = (props: IUserRecipesProps) => {
-    React.useEffect(() => {
-        props.getProfileOwner(props.id);
-        props.getRecipes(props.id);
-    }, [ props.id ]);
 	return (
-        <div>
+        <div className='recipe-list-cont'>
+            {RecipeHeader(props.currentUser, props.profileOwner)}
 			<RecipeList recipes={props.recipes} currentUser={props.currentUser} profileOwner={props.profileOwner} />
 		</div>
 	);

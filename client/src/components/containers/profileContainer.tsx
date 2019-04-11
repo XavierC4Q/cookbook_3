@@ -11,10 +11,6 @@ import { getAllUserRecipesThunk, getSingleRecipeThunk } from '../../store/action
 import { IRecipeState } from '../../store/reducers/recipe';
 import UserRecipes from '../profile/userRecipes';
 
-interface Match {
-	id: string;
-}
-
 interface IProfileContainerStateProps extends IProfileState, Partial<IRecipeState>, Partial<IUserState> {}
 
 interface IDispatchProps {
@@ -25,23 +21,30 @@ interface IDispatchProps {
 	getSingleRecipe: (recipeId: string) => void;
 }
 
-export interface IProfileContainerProps extends IProfileContainerStateProps, IDispatchProps {}
+export interface IProfileContainerProps extends IProfileContainerStateProps, IDispatchProps {
+	id: string;
+}
 
 const ProfileContainer: React.FC<IProfileContainerProps> = (props: IProfileContainerProps) => {
+	React.useEffect(
+		() => {
+			props.getSingleUserInfo(props.id);
+			props.getAllRecipes(props.id);
+		},
+		[ props.id ]
+	);
+
 	return (
 		<React.Fragment>
 			<Route
 				path='/profile/:id'
-				render={(routeProps: RouteComponentProps<Match>): React.ReactNode => (
+				render={(routeProps: RouteComponentProps): React.ReactNode => (
 					<UserRecipes
 						{...routeProps}
 						{...props}
-						id={routeProps.match.params.id}
 						currentUser={props.currentUser || null}
 						profileOwner={props.profile_user}
 						recipes={props.all_user_recipes || []}
-						getProfileOwner={props.getSingleUserInfo}
-						getRecipes={props.getAllRecipes}
 					/>
 				)}
 			/>
