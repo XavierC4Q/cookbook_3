@@ -37,8 +37,7 @@ class Recipe(models.Model):
     image = models.ImageField(upload_to="uploads/recipes", blank=True, null=True)
     ingredients = ArrayField(
         models.CharField(max_length=50, blank=False, null=False),
-        blank=False,
-        null=False,
+        default=list
     )
     description = models.TextField(blank=True, null=True)
 
