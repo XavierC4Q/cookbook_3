@@ -1,21 +1,19 @@
 import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Route, RouteComponentProps } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
+import { ILoginCred, ISignUpCred, loginThunk, signupThunk } from '../../store/actions/actionCreators/user';
 import { AppState } from '../../store/config';
 import { IUserState } from '../../store/reducers/user';
-import { loginThunk, signupThunk, LoginCred, SignUpCred } from '../../store/actions/actionCreators/user';
 import LoginForm from '../forms/login';
 import SignUpForm from '../forms/signup';
 
-interface IStateProps extends IUserState {}
-
 interface IDispatchProps {
-	loginUser: (credentials: LoginCred) => void;
-	signupUser: (credentials: SignUpCred) => void;
+	loginUser: (credentials: ILoginCred) => void;
+	signupUser: (credentials: ISignUpCred) => void;
 }
 
-export interface IUserAuthContainerProps extends IStateProps, IDispatchProps {}
+export interface IUserAuthContainerProps extends IUserState, IDispatchProps {}
 
 const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthContainerProps) => {
 	return (
@@ -36,15 +34,15 @@ const UserAuthContainer: React.FC<IUserAuthContainerProps> = (props: IUserAuthCo
 	);
 };
 
-const mapStateToProps = (state: AppState): IStateProps => state.users;
+const mapStateToProps = (state: AppState): IUserState => state.users;
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProps => {
 	return {
-		loginUser: credentials => dispatch(loginThunk(credentials)),
-		signupUser: credentials => dispatch(signupThunk(credentials))
+		loginUser: (credentials) => dispatch(loginThunk(credentials)),
+		signupUser: (credentials) => dispatch(signupThunk(credentials)),
 	};
 };
 
-export default connect<IStateProps, IDispatchProps, {}, AppState>(mapStateToProps, mapDispatchToProps)(
-	UserAuthContainer
+export default connect<IUserState, IDispatchProps, {}, AppState>(mapStateToProps, mapDispatchToProps)(
+	UserAuthContainer,
 );

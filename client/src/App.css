@@ -60,6 +60,7 @@ html, body {
 .recipe-cont {
   width: 330px;
   height: 350px;
+  margin: 5px;
 }
 /* END CONTAINERS */
 
@@ -175,8 +176,9 @@ html, body {
 
 .recipe-list {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap
 }
 
 .recipe-header {

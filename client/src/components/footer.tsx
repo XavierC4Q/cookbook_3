@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-export interface IFooterProps {}
-
-const Footer: React.FC<IFooterProps> = (props: IFooterProps) => {
+const Footer: React.FC<{}> = (props: {}) => {
 	return (
 		<div className='footer-cont'>
 			<div className='footer-links'>

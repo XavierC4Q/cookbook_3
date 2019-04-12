@@ -9,10 +9,8 @@ export interface IDashboardStateProps {
 	currentUser: IUser | null;
 }
 
-interface IDashBoardContainerProps extends IDashboardStateProps {};
+const DashBoardContainer: React.FC<IDashboardStateProps> = (props: IDashboardStateProps) => {
 
-const DashBoardContainer: React.FC<IDashBoardContainerProps> = (props: IDashBoardContainerProps) => {
-	
 	return (
 		<React.Fragment>
 			<Dashboard {...props} />
@@ -21,7 +19,7 @@ const DashBoardContainer: React.FC<IDashBoardContainerProps> = (props: IDashBoar
 };
 
 const mapStateToProps = (state: AppState): IDashboardStateProps => ({
-	currentUser: state.users.currentUser
+	currentUser: state.users.currentUser,
 });
 
 export default connect<IDashboardStateProps, {}, {}, AppState>(mapStateToProps)(DashBoardContainer);

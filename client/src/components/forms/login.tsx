@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { LoginCred } from '../../store/actions/actionCreators/user';
-import useFormHook, { IFormState } from '../hooks/useForm';
 import * as Yup from 'yup';
-import Field from './field';
+import { ILoginCred } from '../../store/actions/actionCreators/user';
 import { IUserAuthContainerProps } from '../containers/userAuthContainer';
+import useFormHook, { IFormState } from '../hooks/useForm';
+import Field from './field';
 
 interface ILoginFormProps extends RouteComponentProps, IUserAuthContainerProps {}
 
@@ -15,12 +15,12 @@ interface ILoginState {
 
 const initialState: ILoginState = {
 	username: '',
-	password: ''
+	password: '',
 };
 
 const validate: Yup.Schema<object> = Yup.object().shape({
 	username: Yup.string().required('username: Username is Required!'),
-	password: Yup.string().required('password: Password is Required!')
+	password: Yup.string().required('password: Password is Required!'),
 });
 
 const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
@@ -30,7 +30,7 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 				props.history.push('/');
 			}
 		},
-		[ props.currentUser ]
+		[ props.currentUser ],
 	);
 
 	const FormState: IFormState = useFormHook(initialState);
@@ -41,7 +41,7 @@ const LoginForm: React.FC<ILoginFormProps> = (props: ILoginFormProps) => {
 		try {
 			const validateOpts: Yup.ValidateOptions = { abortEarly: false };
 			await validate.validate(FormState.inputs, validateOpts);
-			await props.loginUser(FormState.inputs as LoginCred);
+			await props.loginUser(FormState.inputs as ILoginCred);
 			FormState.resetForm();
 		} catch (error) {
 			FormState.handleErrors(error.errors as Yup.ValidationError);

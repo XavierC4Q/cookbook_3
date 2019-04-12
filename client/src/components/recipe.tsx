@@ -1,22 +1,14 @@
 import * as React from 'react';
 import { IRecipe } from '../store/reducers/recipe';
 
-export interface IRecipeProps extends IRecipe {
-	closeModal?: () => void;
+interface IRecipeViewProps extends IRecipe {
+	toggleRecipeDetail: (id: number) => void;
 }
 
-const renderIngredients = (ingredients: Array<string>): React.ReactNodeArray => {
-	return ingredients.map((ingredient, i) => <li key={i}>{ingredient}</li>);
-};
-
-const Recipe: React.FC<IRecipeProps> = (props: IRecipeProps) => {
-	
-	const handleRecipeDetail = () => {
-		console.log('Div clicked')
-	};
+const Recipe: React.FC<IRecipeViewProps> = (props: IRecipeViewProps) => {
 
 	return (
-		<div className='recipe-cont' onClick={handleRecipeDetail}>
+		<div className='recipe-cont' onClick={() => props.toggleRecipeDetail(props.id)}>
 			<section className='recipe-header'>
 				<div className='recipe-name'>
 					<h2>{props.recipe_name}</h2>
@@ -25,9 +17,11 @@ const Recipe: React.FC<IRecipeProps> = (props: IRecipeProps) => {
 					<h3>By {props.owner.username}</h3>
 				</div>
 			</section>
+
 			<section className='recipe-image'>
 				<img src={props.image || ''} alt='recipe img' />
 			</section>
+
 			<section className='recipe-content'>
 				<div>
 					<label>Favorites</label>

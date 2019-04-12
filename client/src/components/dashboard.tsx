@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteProps, Link } from 'react-router-dom';
+import { Link, RouteProps } from 'react-router-dom';
 import { IDashboardStateProps } from './containers/dashboardContainer';
 import Feed from './feed';
 

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { AppState } from '../../store/config';
+import { Route, RouteComponentProps } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
-import { IUser, IUserState } from '../../store/reducers/user';
-import { IProfileState } from '../../store/reducers/profile';
-import { logoutThunk } from '../../store/actions/actionCreators/user';
-import { getSingleUserThunk, editUserThunk } from '../../store/actions/actionCreators/profile';
+import { editUserThunk, getSingleUserThunk } from '../../store/actions/actionCreators/profile';
 import { getAllUserRecipesThunk, getSingleRecipeThunk } from '../../store/actions/actionCreators/recipe';
+import { logoutThunk } from '../../store/actions/actionCreators/user';
+import { AppState } from '../../store/config';
+import { IProfileState } from '../../store/reducers/profile';
 import { IRecipeState } from '../../store/reducers/recipe';
+import { IUser, IUserState } from '../../store/reducers/user';
 import UserRecipes from '../profile/userRecipes';
 
 interface IProfileContainerStateProps extends IProfileState, Partial<IRecipeState>, Partial<IUserState> {}
@@ -31,7 +31,7 @@ const ProfileContainer: React.FC<IProfileContainerProps> = (props: IProfileConta
 			props.getSingleUserInfo(props.id);
 			props.getAllRecipes(props.id);
 		},
-		[ props.id ]
+		[ props.id ],
 	);
 
 	return (
@@ -63,20 +63,20 @@ const mapStateToProps = (state: AppState): IProfileContainerStateProps => {
 		all_recipes_loading: state.recipe.all_recipes_loading,
 		single_recipe: state.recipe.single_recipe,
 		single_recipe_loading: state.recipe.single_recipe_loading,
-		single_recipe_err: state.recipe.single_recipe_err
+		single_recipe_err: state.recipe.single_recipe_err,
 	};
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProps => {
 	return {
 		logutUser: () => dispatch(logoutThunk()),
-		getSingleUserInfo: id => dispatch(getSingleUserThunk(id)),
-		editProfile: update_info => dispatch(editUserThunk(update_info)),
-		getAllRecipes: id => dispatch(getAllUserRecipesThunk(id)),
-		getSingleRecipe: recipeId => dispatch(getSingleRecipeThunk(recipeId))
+		getSingleUserInfo: (id) => dispatch(getSingleUserThunk(id)),
+		editProfile: (update_info) => dispatch(editUserThunk(update_info)),
+		getAllRecipes: (id) => dispatch(getAllUserRecipesThunk(id)),
+		getSingleRecipe: (recipeId) => dispatch(getSingleRecipeThunk(recipeId)),
 	};
 };
 
 export default connect<IProfileContainerStateProps, IDispatchProps, {}, AppState>(mapStateToProps, mapDispatchToProps)(
-	ProfileContainer
+	ProfileContainer,
 );

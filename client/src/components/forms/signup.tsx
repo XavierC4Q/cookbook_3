@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { SignUpCred } from '../../store/actions/actionCreators/user';
-import useFormHook, { IFormState } from '../hooks/useForm';
 import * as Yup from 'yup';
-import Field from './field';
+import { ISignUpCred } from '../../store/actions/actionCreators/user';
 import { IUserAuthContainerProps } from '../containers/userAuthContainer';
+import useFormHook, { IFormState } from '../hooks/useForm';
+import Field from './field';
 
 interface ISignUpFormProps extends RouteComponentProps, IUserAuthContainerProps {}
 
@@ -21,7 +21,7 @@ const initialState: ISignUpFormState = {
 	password1: '',
 	password2: '',
 	email: '',
-	country: ''
+	country: '',
 };
 
 const validate: Yup.Schema<object> = Yup.object().shape({
@@ -37,7 +37,7 @@ const validate: Yup.Schema<object> = Yup.object().shape({
 		.oneOf([ Yup.ref('password1'), null ], 'password2: Passwords must match')
 		.required('password2: Confirm password is required'),
 	email: Yup.string().email('email: Email address is not valid'),
-	country: Yup.string().required('country: Country is required')
+	country: Yup.string().required('country: Country is required'),
 });
 
 const SignUpForm: React.SFC<ISignUpFormProps> = (props: ISignUpFormProps) => {
@@ -47,7 +47,7 @@ const SignUpForm: React.SFC<ISignUpFormProps> = (props: ISignUpFormProps) => {
 				props.history.push('/');
 			}
 		},
-		[ props.currentUser ]
+		[ props.currentUser ],
 	);
 
 	const FormState: IFormState = useFormHook(initialState);
@@ -58,7 +58,7 @@ const SignUpForm: React.SFC<ISignUpFormProps> = (props: ISignUpFormProps) => {
 		try {
 			const validateOpts: Yup.ValidateOptions = { abortEarly: false };
 			await validate.validate(FormState.inputs, validateOpts);
-			await props.signupUser(FormState.inputs as SignUpCred);
+			await props.signupUser(FormState.inputs as ISignUpCred);
 			FormState.resetForm();
 		} catch (error) {
 			FormState.handleErrors(error.errors as Yup.ValidationError);

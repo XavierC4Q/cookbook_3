@@ -13,8 +13,9 @@ export interface IFormState {
 }
 
 const initialErrors = (values: object): object => {
-	let errs: { [key: string]: string[] } = {};
-	for (let k in values) {
+	const errs: { [key: string]: string[] } = {};
+
+	for (const k in values) {
 		errs[k] = [];
 	}
 	return errs;
@@ -30,14 +31,15 @@ const useFormHook = (values: object) => {
 	const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
 		setInputs({
 			...inputs,
-			[e.currentTarget.name]: e.currentTarget.value
+			[e.currentTarget.name]: e.currentTarget.value,
 		});
 	};
 
 	const handleErrors = (errs: IFormErrors) => {
-		let newErrors: { [key: string]: any } = { ...errors };
-		for (let k in errs) {
-			let splitErr = errs[k].split(': ');
+		const newErrors: { [key: string]: any } = { ...errors };
+
+		for (const k in errs) {
+			const splitErr = errs[k].split(': ');
 			newErrors[splitErr[0]].push(splitErr[1]);
 		}
 		setErrors(newErrors);

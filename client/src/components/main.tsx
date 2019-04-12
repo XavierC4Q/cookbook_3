@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { Route, RouteProps, RouteComponentProps } from 'react-router-dom';
+import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 
 import DashBoardContainer from './containers/dashboardContainer';
-import UserAuthContainer from './containers/userAuthContainer';
 import ProfileContainer from './containers/profileContainer';
+import UserAuthContainer from './containers/userAuthContainer';
 
-interface Match {
+interface IMatch {
 	id: string;
 }
 
-export interface IMainProps {}
-
-const Main: React.FC<IMainProps> = (props: IMainProps) => (
+const Main: React.FC<{}> = (props: {}) => (
 	<div className='main-cont'>
 		<Route
 			exact
@@ -26,8 +24,8 @@ const Main: React.FC<IMainProps> = (props: IMainProps) => (
 				return <UserAuthContainer {...routeProps} />;
 			}}
 		/>
-		<Route path='/profile/:id' render={(routeProps: RouteComponentProps<Match>): React.ReactNode => {
-			return <ProfileContainer {...routeProps} id={routeProps.match.params.id}/>
+		<Route path='/profile/:id' render={(routeProps: RouteComponentProps<IMatch>): React.ReactNode => {
+			return <ProfileContainer {...routeProps} id={routeProps.match.params.id}/>;
 		}} />
 	</div>
 );

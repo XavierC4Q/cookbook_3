@@ -1,19 +1,17 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
-import { loggedInThunk } from './store/actions/actionCreators/user';
-import { IUser } from './store/reducers/user';
-import { AppState } from './store/config';
-
+import './App.css';
+import Footer from './components/footer';
 import Header from './components/header';
 import Main from './components/main';
-import Footer from './components/footer';
-
-import './App.css';
+import { loggedInThunk } from './store/actions/actionCreators/user';
+import { AppState } from './store/config';
+import { IUser } from './store/reducers/user';
 
 export interface IAppStateProps {
-	currentUser: IUser | null
+	currentUser: IUser | null;
 }
 
 interface IDispatchProps {
@@ -38,16 +36,16 @@ const App: React.FC<IAppProps> = (props: IAppProps) => {
 
 const mapStateToProps = (state: AppState): IAppStateProps => {
 	return {
-		currentUser: state.users.currentUser
-	}
-}
+		currentUser: state.users.currentUser,
+	};
+};
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProps => {
 	return {
 		getLoggedInUser: async () => {
 			await dispatch(loggedInThunk());
 			return true;
-		}
+		},
 	};
 };
 

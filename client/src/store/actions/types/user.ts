@@ -8,7 +8,6 @@ export type UserActionTypes =
 	| typeof types.SIGNUP
 	| typeof types.SIGNUP_ERROR
 	| typeof types.SIGNUP_SUCCESS
-	| typeof types.LOGOUT 
+	| typeof types.LOGOUT
 	| typeof types.LOGOUT_ERROR
 	| typeof types.LOGOUT_SUCCESS;
-
