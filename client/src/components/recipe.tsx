@@ -2,13 +2,13 @@ import * as React from 'react';
 import { IRecipe } from '../store/reducers/recipe';
 
 interface IRecipeViewProps extends IRecipe {
-	toggleRecipeDetail: (id: number) => void;
+	setRecipeDetail: (id: number) => void;
 }
 
 const Recipe: React.FC<IRecipeViewProps> = (props: IRecipeViewProps) => {
 
 	return (
-		<div className='recipe-cont' onClick={() => props.toggleRecipeDetail(props.id)}>
+		<div className='recipe-cont' onClick={() => props.setRecipeDetail(props.id)}>
 			<section className='recipe-header'>
 				<div className='recipe-name'>
 					<h2>{props.recipe_name}</h2>

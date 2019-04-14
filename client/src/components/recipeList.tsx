@@ -14,15 +14,21 @@ const RecipeList: React.FC<IRecipeListProps> = (props: IRecipeListProps) => {
 	const [ selectedRecipe, setRecipe ] = React.useState({});
 	const [ modalOpen, handleModal ] = React.useState(false);
 
-	const toggleModal = () => handleModal(!modalOpen);
-
 	const setRecipeDetail = (id: number) => {
 		const findRecipe = props.recipes.find((recipe) => recipe.id === id);
-		setRecipe({...selectedRecipe, ...findRecipe});
+		setRecipe({ ...selectedRecipe, ...findRecipe });
+		handleModal(true);
+	};
+
+	const closeRecipeDetail = () => {
+		setRecipe({});
+		handleModal(false);
 	};
 
 	const renderRecipes = (recipes: IRecipe[]): React.ReactNodeArray => {
-		return recipes.map((recipe, i) => <Recipe key={i} toggleRecipeDetail={setRecipeDetail} {...recipe} />);
+		return recipes.map((recipe, i) => (
+			<Recipe key={i} setRecipeDetail={setRecipeDetail} {...recipe} />
+		));
 	};
 
 	return <div className='recipe-list'>{renderRecipes(props.recipes)}</div>;
