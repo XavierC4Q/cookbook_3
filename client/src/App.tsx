@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
-import './App.css';
 import Footer from './components/footer';
 import Header from './components/header';
 import Main from './components/main';
@@ -10,12 +9,14 @@ import { loggedInThunk } from './store/actions/actionCreators/user';
 import { AppState } from './store/config';
 import { IUser } from './store/reducers/user';
 
+import './App.css';
+
 export interface IAppStateProps {
 	currentUser: IUser | null;
 }
 
 interface IDispatchProps {
-	getLoggedInUser: () => Promise<boolean>;
+	getLoggedInUser: () => Promise<void>;
 }
 
 interface IAppProps extends IAppStateProps, IDispatchProps, RouteComponentProps {}
@@ -44,7 +45,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProp
 	return {
 		getLoggedInUser: async () => {
 			await dispatch(loggedInThunk());
-			return true;
 		},
 	};
 };

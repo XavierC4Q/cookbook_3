@@ -3,6 +3,7 @@ import { IRecipe } from '../store/reducers/recipe';
 import { IUser } from '../store/reducers/user';
 
 import Recipe from './recipe';
+import RecipeDetail from './recipeDetail';
 
 export interface IRecipeListProps {
 	recipes: IRecipe[];
@@ -11,7 +12,7 @@ export interface IRecipeListProps {
 }
 
 const RecipeList: React.FC<IRecipeListProps> = (props: IRecipeListProps) => {
-	const [ selectedRecipe, setRecipe ] = React.useState({});
+	const [ selectedRecipe, setRecipe ] = React.useState<IRecipe | object>({});
 	const [ modalOpen, handleModal ] = React.useState(false);
 
 	const setRecipeDetail = (id: number) => {
@@ -26,10 +27,19 @@ const RecipeList: React.FC<IRecipeListProps> = (props: IRecipeListProps) => {
 	};
 
 	const renderRecipes = (recipes: IRecipe[]): React.ReactNodeArray => {
-		return recipes.map((recipe, i) => (
-			<Recipe key={i} setRecipeDetail={setRecipeDetail} {...recipe} />
-		));
+		return recipes.map((recipe, i) => <Recipe key={i} setRecipeDetail={setRecipeDetail} {...recipe} />);
 	};
+
+	if (modalOpen && Object.entries(selectedRecipe).length) {
+		return (
+			<RecipeDetail
+				{...selectedRecipe as IRecipe}
+				currentUser={props.currentUser}
+				profileOwner={props.profileOwner}
+				closeRecipeDetail={closeRecipeDetail}
+			/>
+		);
+	}
 
 	return <div className='recipe-list'>{renderRecipes(props.recipes)}</div>;
 };

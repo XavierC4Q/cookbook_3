@@ -1,0 +1,5 @@
+/node_modules
+/venv/lib
+/venv/bin
+/venv/server/cookbook/__pycache__
+/venv/server/cookbook/migrations
