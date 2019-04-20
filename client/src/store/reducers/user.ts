@@ -4,7 +4,6 @@ import * as types from '../constants/user';
 
 export interface IUser {
 	id: number | undefined;
-	pk: number | undefined;
 	username: string;
 	email?: string;
 	country: string;

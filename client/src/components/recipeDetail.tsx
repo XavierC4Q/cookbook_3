@@ -12,10 +12,12 @@ interface IRecipeDetailProps extends IRecipe {
 const RecipeDetail: React.FC<IRecipeDetailProps> = (props: IRecipeDetailProps) => {
 	const handleEditLink = (): JSX.Element | null => {
 		if (props.currentUser && props.profileOwner) {
-			if (props.currentUser.pk === props.profileOwner.id) {
-				return( <span>
-				<Link to='/edit'>Edit Recipe</Link>
-			</span>);
+			if (props.currentUser.id === props.profileOwner.id) {
+				return (
+					<span>
+						<Link to='/edit'>Edit Recipe</Link>
+					</span>
+				);
 			}
 			return null;
 		}
@@ -37,23 +39,27 @@ const RecipeDetail: React.FC<IRecipeDetailProps> = (props: IRecipeDetailProps) =
 					</span>
 				</div>
 			</section>
+
 			<section className='recipe-detail-image-section'>
 				<img src={props.image || ''} alt='recipe image' />
 			</section>
+
 			<section className='recipe-detail-content'>
 				<div className='recipe-stats-links'>
-					<div>{handleEditLink()}</div>
-					<div>
+					<div className='recipe-edit'>{handleEditLink()}</div>
+					<div className='recipe-stats'>
 						<span>Favorites: {props.favorite_count}</span>
+						<span>Forks: 0</span>
 					</div>
 				</div>
-				<div>
-					<h4>Description</h4>
-					<p>{props.description}</p>
-				</div>
-				<div>
-					<h4>Ingredients</h4>
-					{props.ingredients.map((ingred, i) => <p key={i}>{ingred}</p>)}
+				<div className='detail-content'>
+					<div className='ingredients-cont'>
+						<h4>Ingredients</h4>
+						{props.ingredients.map((ingred, i) => <p key={i}>{ingred}</p>)}
+					</div>
+					<div className='description-cont'>
+						<p>{props.description}</p>
+					</div>
 				</div>
 			</section>
 		</div>

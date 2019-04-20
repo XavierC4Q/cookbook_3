@@ -5,10 +5,19 @@ from django.contrib.postgres.fields import ArrayField
 
 class User(AbstractUser):
 
-    username = models.CharField(max_length=16, blank=False, null=False, unique=True)
+    username = models.CharField(
+        max_length=16,
+        blank=False,
+        null=False,
+        unique=True
+    )
     email = models.EmailField(blank=True, null=True)
     country = models.CharField(max_length=30, blank=False, null=False)
-    profile_image = models.ImageField(upload_to="uploads/users", blank=True, null=True)
+    profile_image = models.ImageField(
+        upload_to="uploads/users",
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.username
@@ -31,10 +40,19 @@ class Follow(models.Model):
 class Recipe(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe_name = models.CharField(max_length=50, blank=False, null=False, unique=True)
+    recipe_name = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False,
+        unique=True
+    )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to="uploads/recipes", blank=True, null=True)
+    image = models.ImageField(
+        upload_to="uploads/recipes",
+        blank=True,
+        null=True
+    )
     ingredients = ArrayField(
         models.CharField(max_length=50, blank=False, null=False),
         default=list
@@ -52,4 +70,6 @@ class Favorite(models.Model):
     favorited_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.recipe.recipe_name + " favorited by " + self.favorited_by.username
+        return F'''
+        {self.recipe.recipe_name} favorited by {self.favorited_by.username}
+        '''

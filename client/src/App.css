@@ -281,5 +281,42 @@ html, body {
   height: 10%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-around
+}
+
+.recipe-edit {
+  width: 100px;
+  text-align: center;
+}
+
+.recipe-stats {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.detail-content {
+  height: 90%;
+  width: 100%;
+}
+
+.ingredients-cont {
+  height: 100%;
+  width: 25%;
+  overflow: scroll;
+  margin: 0;
+  float: left;
+}
+
+.ingredients-cont h4 {
+  text-align: center;
+}
+
+.description-cont {
+  width: 75%;
+  height: 100%;
+  overflow: scroll;
+  text-align: center;
+  float: left;
 }

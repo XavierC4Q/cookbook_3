@@ -114,6 +114,14 @@ REST_FRAMEWORK = {
     ),
 }
 
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'cookbook.serializers.RegisterSerializer'
+}
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'cookbook.serializers.UserSerializer',
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

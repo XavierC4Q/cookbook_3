@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -23,10 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
         res = User.objects.filter(country=same_country)
         serializer = self.get_serializer(res, many=True)
 
-        if res is not None:
-            serializer = self.get_serializer(res, many=True)
-            return Response(serializer.data)
-        return Response([])
+        return Response(serializer.data)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -39,10 +35,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user_id = request.GET.get("user_id", 0)
         res = Recipe.objects.filter(owner=user_id)
 
-        if res is not None:
-            serializer = self.get_serializer(res, many=True)
-            return Response(serializer.data)
-        return Response([])
+        serializer = self.get_serializer(res, many=True)
+        return Response(serializer.data)
 
 
 class FollowViewSet(viewsets.ModelViewSet):
@@ -55,4 +49,3 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     serializer_class = FavoriteSerializer
     queryset = Favorite.objects.all()
-

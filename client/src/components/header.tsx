@@ -4,7 +4,7 @@ import { IAppStateProps } from '../App';
 import { IUser } from '../store/reducers/user';
 
 const ProfileLink = (user: IUser): React.ReactNode => {
-	const link = `/profile/${user.pk}`;
+	const link = `/profile/${user.id}`;
 	return (
 		<Link to={link}>
 			<h3 style={{ textAlign: 'right' }}>Your Profile</h3>

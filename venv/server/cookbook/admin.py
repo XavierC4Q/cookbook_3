@@ -7,7 +7,13 @@ class UserAdmin(admin.ModelAdmin):
 
     fieldsets = ((None, {"fields": ("username", "email", "country")}),)
 
-    list_display = ("username", "email", "country", "date_joined", "last_login")
+    list_display = (
+        "username",
+        "email",
+        "country",
+        "date_joined",
+        "last_login"
+    )
 
 
 admin.site.unregister(Group)

@@ -14,7 +14,7 @@ const RecipeHeader = (currentUser: IUser | null, profileOwner: IUser | null): Re
 	if (!profileOwner) {
 		return <h1>NOT FOUND</h1>;
 	}
-	if (currentUser && currentUser.pk === profileOwner.id) {
+	if (currentUser && currentUser.id === profileOwner.id) {
 		return <h1>Your Recipes</h1>;
 	}
 	return <h1>{profileOwner.username}'s Recipes</h1>;
