@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { IRecipe } from '../store/reducers/recipe';
-import { IUser } from '../store/reducers/user';
+import { IRecipe } from '../../store/reducers/recipe';
+import { IUser } from '../../store/reducers/user';
 
 interface IRecipeDetailProps extends IRecipe {
 	currentUser: IUser | null;

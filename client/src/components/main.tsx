@@ -4,6 +4,7 @@ import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 import DashBoardContainer from './containers/dashboardContainer';
 import ProfileContainer from './containers/profileContainer';
 import UserAuthContainer from './containers/userAuthContainer';
+import EditRecipe from './recipe/editRecipe';
 
 interface IMatch {
 	id: string;
@@ -27,6 +28,9 @@ const Main: React.FC<{}> = (props: {}) => (
 		<Route path='/profile/:id' render={(routeProps: RouteComponentProps<IMatch>): React.ReactNode => {
 			return <ProfileContainer {...routeProps} id={routeProps.match.params.id}/>;
 		}} />
+		<Route path='/recipe/edit/:id' render={(routeProps: RouteComponentProps<IMatch>): React.ReactNode => {
+			return <EditRecipe {...routeProps} recipeId={routeProps.match.params.id}/>;
+		}}/>
 	</div>
 );
 

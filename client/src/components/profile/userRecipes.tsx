@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IRecipe } from '../../store/reducers/recipe';
 import { IUser } from '../../store/reducers/user';
-import RecipeList from '../recipeList';
+import RecipeList from '../recipe/recipeList';
 
 export interface IUserRecipesProps extends RouteComponentProps {
 	currentUser: IUser | null;

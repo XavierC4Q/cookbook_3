@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IRecipe } from '../store/reducers/recipe';
+import { IRecipe } from '../../store/reducers/recipe';
 
 interface IRecipeViewProps extends IRecipe {
 	setRecipeDetail: (id: number) => void;

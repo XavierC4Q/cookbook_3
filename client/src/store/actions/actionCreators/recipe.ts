@@ -26,3 +26,13 @@ export const getSingleRecipeThunk = (recipeId: string): AppThunk<void> => (dispa
 		}
 	}, 1200);
 };
+
+export const editRecipeThunk = (recipeId: string, updatedRecipe: Partial<IRecipe>): AppThunk<void> => async (dispatch) => {
+	dispatch<AppActions>({ type: types.EDIT_LOADING });
+	try {
+		await axios.patch(`/cookbook/recipe/${recipeId}`, updatedRecipe);
+		dispatch<AppActions>({ type: types.EDIT_RECIPE });
+	} catch (err) {
+		dispatch<AppActions>({ type: types.EDIT_RECIPE_ERROR, payload: 'Failed to edit recipe' });
+	}
+};
