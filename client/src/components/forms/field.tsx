@@ -8,8 +8,8 @@ interface IFieldProps {
 	value: string;
 	placeholder: string;
 	onChange: (e: React.FormEvent<HTMLInputElement>) => void;
-	errors: Array<string>;
-	select_options?: Array<string>;
+	errors: string[];
+	select_options?: string[];
 }
 
 const showErrors = (errs: IFormErrors): React.ReactNodeArray => errs.map((e: string) => <p>{e}</p>);

@@ -5,6 +5,9 @@ import { ThunkDispatch } from 'redux-thunk';
 import { editRecipeThunk, getSingleRecipeThunk } from '../../store/actions/actionCreators/recipe';
 import { AppState } from '../../store/config';
 import { IRecipe } from '../../store/reducers/recipe';
+import { IUser } from '../../store/reducers/user';
+
+import EditRecipeForm from '../forms/editRecipeForm';
 
 interface IStateProps {
 	singleRecipe: IRecipe | null;
@@ -13,6 +16,8 @@ interface IStateProps {
 	editLoading: boolean;
 	editSuccess: boolean;
 	editRecipeErr: string;
+	currentUser: IUser | null;
+	profileOwner: IUser | null;
 }
 
 interface IDispatchProps {
@@ -24,13 +29,19 @@ interface IOwnProps extends RouteComponentProps {
 	recipeId: string;
 }
 
-type EditRecipeProps = IOwnProps & IStateProps & IDispatchProps;
+export type EditRecipeProps = IOwnProps & IStateProps & IDispatchProps;
 
-const EditRecipe: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
+const EditRecipeContainer: React.FC<EditRecipeProps> = (props: EditRecipeProps): React.ReactNode | any => {
 	React.useEffect(() => {
 		props.getSingleRecipe(props.recipeId);
-	});
-	return (props.singleRecipe ? <div><h2>Edit Recipe</h2></div> : <h3>Recipe Not Found</h3>);
+	}, []);
+	if (!props.singleRecipe) {
+		return <div>Recipe Loading</div>;
+	}
+	if (props.currentUser && props.profileOwner && props.currentUser.id === props.profileOwner.id) {
+		return <EditRecipeForm {...props} />;
+	}
+	props.history.push('/');
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
@@ -41,6 +52,8 @@ const mapStateToProps = (state: AppState): IStateProps => {
 		editLoading: state.recipe.edit_recipe_loading,
 		editSuccess: state.recipe.edit_recipe_success,
 		editRecipeErr: state.recipe.edit_recipe_err,
+		currentUser: state.users.currentUser,
+		profileOwner: state.profile.profile_user,
 	};
 };
 
@@ -51,4 +64,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProp
 	};
 };
 
-export default connect<IStateProps, IDispatchProps, IOwnProps, AppState>(mapStateToProps, mapDispatchToProps)(EditRecipe);
+export default connect<IStateProps, IDispatchProps, IOwnProps, AppState>(
+	mapStateToProps,
+	mapDispatchToProps,
+)(EditRecipeContainer);

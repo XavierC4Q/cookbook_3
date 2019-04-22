@@ -13,9 +13,10 @@ const RecipeDetail: React.FC<IRecipeDetailProps> = (props: IRecipeDetailProps) =
 	const handleEditLink = (): JSX.Element | null => {
 		if (props.currentUser && props.profileOwner) {
 			if (props.currentUser.id === props.profileOwner.id) {
+				const recipeEditUrl = `/recipe/edit/${props.id}`;
 				return (
 					<span>
-						<Link to='/edit'>Edit Recipe</Link>
+						<Link to={recipeEditUrl}>Edit Recipe</Link>
 					</span>
 				);
 			}

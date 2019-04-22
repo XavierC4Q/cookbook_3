@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 
 import DashBoardContainer from './containers/dashboardContainer';
+import EditRecipeContainer from './containers/editRecipeContainer';
 import ProfileContainer from './containers/profileContainer';
 import UserAuthContainer from './containers/userAuthContainer';
-import EditRecipe from './recipe/editRecipe';
 
 interface IMatch {
 	id: string;
@@ -29,8 +29,8 @@ const Main: React.FC<{}> = (props: {}) => (
 			return <ProfileContainer {...routeProps} id={routeProps.match.params.id}/>;
 		}} />
 		<Route path='/recipe/edit/:id' render={(routeProps: RouteComponentProps<IMatch>): React.ReactNode => {
-			return <EditRecipe {...routeProps} recipeId={routeProps.match.params.id}/>;
-		}}/>
+			return <EditRecipeContainer {...routeProps} recipeId={routeProps.match.params.id}/>;
+		}} />
 	</div>
 );
 
