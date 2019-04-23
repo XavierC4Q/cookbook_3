@@ -11,7 +11,7 @@ export interface IRecipe {
 	updated: Date;
 	ingredients: string[];
 	favorite_count: number;
-	description: string | null;
+	description: string;
 	image?: string | null;
 }
 

@@ -41,7 +41,7 @@ const EditRecipeContainer: React.FC<EditRecipeProps> = (props: EditRecipeProps):
 	if (props.currentUser && props.profileOwner && props.currentUser.id === props.profileOwner.id) {
 		return <EditRecipeForm {...props} />;
 	}
-	props.history.push('/');
+	return props.history.push('/');
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {

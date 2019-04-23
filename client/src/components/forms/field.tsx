@@ -7,7 +7,7 @@ interface IFieldProps {
 	name: string;
 	value: string;
 	placeholder: string;
-	onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+	onChange: (e: React.FormEvent<HTMLInputElement> & React.FormEvent<HTMLTextAreaElement>) => void;
 	errors: string[];
 	select_options?: string[];
 }
@@ -19,13 +19,21 @@ const Field: React.FC<IFieldProps> = (props: IFieldProps) => (
 		<label>{props.label}</label>
 		<div>
 			<div>
-				<input
-					type={props.type}
-					name={props.name}
-					value={props.value}
-					placeholder={props.placeholder}
-					onChange={props.onChange}
-				/>
+				{
+					props.type === 'textarea' ?
+					<textarea
+						name={props.name}
+						defaultValue={props.value}
+						placeholder={props.placeholder}
+						onInput={props.onChange}
+					/> :
+					<input
+						type={props.type}
+						name={props.name}
+						defaultValue={props.value}
+						placeholder={props.placeholder}
+						onInput={props.onChange}
+					/>}
 			</div>
 			<div>{props.errors.length !== 0 && showErrors(props.errors)}</div>
 		</div>
