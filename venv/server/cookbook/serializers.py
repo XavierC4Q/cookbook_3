@@ -62,14 +62,17 @@ class UserSerializer(serializers.ModelSerializer):
     total_favorites = serializers.SerializerMethodField(read_only=True)
     total_recipes = serializers.SerializerMethodField(read_only=True)
 
-    def get_total_followers(self, obj):
-        return Follow.objects.filter(follows__id=obj.id).count()
+    @staticmethod
+    def get_total_followers(self):
+        return Follow.objects.filter(follows__id=self.id).count()
 
-    def get_total_favorites(self, obj):
-        return Favorite.objects.filter(favorited_by=obj.id).count()
+    @staticmethod
+    def get_total_favorites(self):
+        return Favorite.objects.filter(favorited_by=self.id).count()
 
-    def get_total_recipes(self, obj):
-        return Recipe.objects.filter(owner=obj.id).count()
+    @staticmethod
+    def get_total_recipes(self):
+        return Recipe.objects.filter(owner=self.id).count()
 
     class Meta:
 
@@ -94,8 +97,9 @@ class RecipeSerializer(serializers.ModelSerializer):
     favorite_count = serializers.SerializerMethodField(read_only=True)
     owner = UserSerializer()
 
-    def get_favorite_count(self, obj):
-        return Favorite.objects.filter(recipe=obj.id).count()
+    @staticmethod
+    def get_favorite_count(self):
+        return Favorite.objects.filter(recipe=self.id).count()
 
     class Meta:
 

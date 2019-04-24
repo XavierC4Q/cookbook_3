@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 import { editRecipeThunk, getSingleRecipeThunk } from '../../store/actions/actionCreators/recipe';
 import { AppState } from '../../store/config';
@@ -41,7 +42,7 @@ const EditRecipeContainer: React.FC<EditRecipeProps> = (props: EditRecipeProps):
 	if (props.currentUser && props.profileOwner && props.currentUser.id === props.profileOwner.id) {
 		return <EditRecipeForm {...props} />;
 	}
-	return props.history.push('/');
+	return <Redirect to='/' />;
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {

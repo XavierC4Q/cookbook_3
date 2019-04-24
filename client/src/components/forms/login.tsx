@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { ILoginCred } from '../../store/actions/actionCreators/user';
 import { IUserAuthContainerProps } from '../containers/userAuthContainer';
 import useFormHook, { IFormState } from '../hooks/useForm';
-import Field from './field';
+import { Field } from './formFields';
 
 interface ILoginFormProps extends RouteComponentProps, IUserAuthContainerProps {}
 

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { EditRecipeProps } from '../containers/editRecipeContainer';
 import { IFormState } from '../hooks/useForm';
 import useFormHook from '../hooks/useForm';
-import Field from './field';
+import { Field } from './formFields';
 
 interface IEditFormState {
 	recipe_name: string;
@@ -39,7 +39,13 @@ const initialState: IEditFormState = {
 
 const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 	const FormState: IFormState = useFormHook(initialState);
+
 	const [ ingredientCount, setIngredients ] = React.useState(1);
+
+	const addIngredient = () => setIngredients(ingredientCount + 1);
+
+	const removeIngredient = () => setIngredients(ingredientCount - 1);
+
 	return (
 		<div>
 			<h2>Edit Your Recipe</h2>
@@ -58,7 +64,7 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 					}
 				/>
 				<Field
-					type='textarea'
+					type='text'
 					label='New Recipe Description'
 					name='description'
 					value={FormState.inputs.recipe_name}
