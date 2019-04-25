@@ -36,7 +36,7 @@ const EditRecipeContainer: React.FC<EditRecipeProps> = (props: EditRecipeProps):
 	React.useEffect(() => {
 		props.getSingleRecipe(props.recipeId);
 	}, []);
-	if (!props.singleRecipe) {
+	if (!props.singleRecipe && !props.singleRecipeLoading) {
 		return <div>Recipe Loading</div>;
 	}
 	if (props.currentUser && props.profileOwner && props.currentUser.id === props.profileOwner.id) {

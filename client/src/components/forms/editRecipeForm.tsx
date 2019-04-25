@@ -1,16 +1,7 @@
+import { Field, FieldArray, Form, Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 import { EditRecipeProps } from '../containers/editRecipeContainer';
-import { IFormState } from '../hooks/useForm';
-import useFormHook from '../hooks/useForm';
-import { Field } from './formFields';
-
-interface IEditFormState {
-	recipe_name: string;
-	image: File | null;
-	description: string;
-	ingredients: string[];
-}
 
 const FILE_SIZE = 160 * 1024;
 const SUPPORTED_FORMATS = [ 'image/jpg', 'image/jpeg', 'image/gif', 'image/png' ];
@@ -30,7 +21,14 @@ const validate: Yup.Schema<object> = Yup.object().shape({
 	),
 });
 
-const initialState: IEditFormState = {
+interface IFormValues {
+	recipe_name: string;
+	description: string;
+	ingredients: string[];
+	image: File | null;
+}
+
+const initialFormValues: IFormValues = {
 	recipe_name: '',
 	description: '',
 	ingredients: [],
@@ -38,45 +36,36 @@ const initialState: IEditFormState = {
 };
 
 const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
-	const FormState: IFormState = useFormHook(initialState);
-
-	const [ ingredientCount, setIngredients ] = React.useState(1);
-
-	const addIngredient = () => setIngredients(ingredientCount + 1);
-
-	const removeIngredient = () => setIngredients(ingredientCount - 1);
-
+	const {
+		currentUser,
+		singleRecipe,
+		recipeId,
+		recipeEdit,
+		profileOwner,
+		editLoading,
+		editSuccess,
+		editRecipeErr,
+		singleRecipeErr,
+		singleRecipeLoading,
+		getSingleRecipe,
+	} = props;
 	return (
 		<div>
-			<h2>Edit Your Recipe</h2>
-			<form>
-				<Field
-					type='text'
-					label='New Recipe Name'
-					name='recipe_name'
-					value={FormState.inputs.recipe_name}
-					onChange={FormState.handleInput}
-					errors={FormState.errors.recipe_name}
-					placeholder={
+			<h1>Edit Recipe Form</h1>
+			<Formik
+				initialValues={initialFormValues}
+				validationSchema={validate}
+				onSubmit={(values: IFormValues, { setSubmitting, submitForm }: FormikActions<IFormValues>) => {
+					console.log('wepa');
+				}}
+				render={({ errors, values, handleSubmit, handleReset }: FormikProps<IFormValues>) => {
+					return <div>
+						<Form>
 
-							props.singleRecipe ? props.singleRecipe.recipe_name :
-							''
-					}
-				/>
-				<Field
-					type='text'
-					label='New Recipe Description'
-					name='description'
-					value={FormState.inputs.recipe_name}
-					onChange={FormState.handleInput}
-					errors={FormState.errors.recipe_name}
-					placeholder={
-
-							props.singleRecipe ? props.singleRecipe.description :
-							''
-					}
-				/>
-			</form>
+						</Form>
+					</div>;
+				}}
+			/>
 		</div>
 	);
 };

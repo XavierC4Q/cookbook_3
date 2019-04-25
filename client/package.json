@@ -12,6 +12,7 @@
     "@types/redux-logger": "^3.0.7",
     "@types/yup": "^0.26.12",
     "axios": "^0.18.0",
+    "formik": "^1.5.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^6.0.1",

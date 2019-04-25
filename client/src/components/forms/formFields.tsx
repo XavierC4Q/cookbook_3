@@ -12,27 +12,7 @@ interface IFieldProps {
 	select_options?: string[];
 }
 
-interface IInputProps {
-	label: string;
-	value: string;
-	onInput: (e: React.FormEvent<HTMLInputElement>) => void;
-}
-
 const showErrors = (errs: IFormErrors): React.ReactNodeArray => errs.map((e: string) => <p>{e}</p>);
-
-export const Input: React.FC<IInputProps> = (props: IInputProps) => {
-
-	return (
-		<section>
-			<label>{props.label}</label>
-			<div>
-				<div>
-					<input type='text' defaultValue={props.value} onInput={props.onInput} />
-				</div>
-			</div>
-		</section>
-	);
-};
 
 export const Field: React.FC<IFieldProps> = (props: IFieldProps) => (
 	<section>
