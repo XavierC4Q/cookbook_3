@@ -1,4 +1,4 @@
-import { Field, FieldArray, FieldProps, Form, Formik, FormikActions, FormikProps } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 import { EditRecipeProps } from '../containers/editRecipeContainer';
@@ -106,6 +106,41 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 										);
 									}}
 								/>
+								<FieldArray
+									name='ingredients'
+									render={(arrayHelpers: FieldArrayRenderProps) =>
+
+											values.ingredients &&
+											values.ingredients.length ? values.ingredients.map((ingred, index) => (
+												<div key={index}>
+													<Field
+														name={`ingredients.${index}`}
+														render={({ field, form }: FieldProps<IFormValues>) => {
+															return (
+																<React.Fragment>
+																	<Input
+																		field={field}
+																		form={form}
+																		label={`Ingredient #${index + 1}`}
+																		placeholder={ingred}
+																	/>
+																	<button type='button' onClick={() => arrayHelpers.remove(index)}>
+																		Remove This Ingredient
+																	</button>
+																</React.Fragment>
+															);
+														}}
+													/>
+													<button type='button' onClick={() => arrayHelpers.insert(index, '')}>
+														More Ingredients
+													</button>
+												</div>
+											)) :
+											<button onClick={() => arrayHelpers.push('')}>Add Ingredient</button>}
+								/>
+								<div>
+									<button type='submit'>Submit</button>
+								</div>
 							</Form>
 						</div>
 					);
