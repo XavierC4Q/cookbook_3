@@ -1,4 +1,4 @@
-import { Field, FieldArray, Form, Formik, FormikActions, FormikProps } from 'formik';
+import { Field, FieldArray, FieldProps, Form, Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 import { EditRecipeProps } from '../containers/editRecipeContainer';
@@ -35,6 +35,24 @@ const initialFormValues: IFormValues = {
 	image: null,
 };
 
+interface IInputProps extends FieldProps<IFormValues> {
+	label: string;
+	placeholder: string;
+}
+
+const Input: React.FC<IInputProps> = (props: IInputProps) => {
+	return (
+		<section>
+			<div>
+				<label>{props.label}</label>
+			</div>
+			<div>
+				<input {...props.field} type='text' placeholder={props.placeholder} />
+			</div>
+		</section>
+	);
+};
+
 const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 	const {
 		currentUser,
@@ -59,11 +77,38 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 					console.log('wepa');
 				}}
 				render={({ errors, values, handleSubmit, handleReset }: FormikProps<IFormValues>) => {
-					return <div>
-						<Form>
-
-						</Form>
-					</div>;
+					return (
+						<div>
+							<Form>
+								<Field
+									name='recipe_name'
+									render={({ field, form }: FieldProps<IFormValues>) => {
+										return (
+											<Input
+												field={field}
+												form={form}
+												label='Recipe Name'
+												placeholder='Enter New Recipe Name'
+											/>
+										);
+									}}
+								/>
+								<Field
+									name='description'
+									render={({ field, form }: FieldProps<IFormValues>) => {
+										return (
+											<Input
+												field={field}
+												form={form}
+												label='Recipe Description'
+												placeholder='Enter New Recipe Description'
+											/>
+										);
+									}}
+								/>
+							</Form>
+						</div>
+					);
 				}}
 			/>
 		</div>
