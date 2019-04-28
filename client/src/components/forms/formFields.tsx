@@ -1,3 +1,4 @@
+import { FieldProps } from 'formik';
 import * as React from 'react';
 import { IFormErrors } from '../hooks/useForm';
 
@@ -31,3 +32,28 @@ export const Field: React.FC<IFieldProps> = (props: IFieldProps) => (
 		</div>
 	</section>
 );
+
+export interface IFormValues {
+	recipe_name: string;
+	description: string;
+	ingredients: string[];
+	image: File | null;
+}
+
+interface IInputProps extends FieldProps<IFormValues> {
+	label: string;
+	placeholder: string;
+}
+
+export const Input: React.FC<IInputProps> = (props: IInputProps) => {
+	return (
+		<section>
+			<div>
+				<label>{props.label}</label>
+			</div>
+			<div>
+				<input {...props.field} type='text' placeholder={props.placeholder} />
+			</div>
+		</section>
+	);
+};
