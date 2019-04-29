@@ -137,6 +137,11 @@ export const recipeReducer: Reducer<IRecipeState, AppActions> = (state = initial
 				single_recipe_loading: false,
 				single_recipe_err: payload,
 			};
+		case types.RESET_RECIPE_EDIT:
+			return {
+				...state,
+				edit_recipe_success: false,
+			};
 		default:
 			return state;
 	}

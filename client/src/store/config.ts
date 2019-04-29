@@ -9,6 +9,7 @@ import { rootReducer } from './reducers/root';
 interface IAppActions {
 	type: AllTypes;
 	readonly payload?: any;
+	readonly meta?: { [key: string]: any };
 }
 
 export type AppActions = IAppActions;

@@ -37,7 +37,6 @@ export interface IFormValues {
 	recipe_name: string;
 	description: string;
 	ingredients: string[];
-	image: File | null;
 }
 
 interface IInputProps extends FieldProps<IFormValues> {

@@ -14,4 +14,5 @@ export type RecipeActionTypes =
 	| typeof types.EDIT_RECIPE_ERROR
 	| typeof types.REMOVE_RECIPE_ERROR
 	| typeof types.ADD_RECIPE_LOADING
-	| typeof types.ADD_RECIPE_ERROR;
+	| typeof types.ADD_RECIPE_ERROR
+	| typeof types.RESET_RECIPE_EDIT;

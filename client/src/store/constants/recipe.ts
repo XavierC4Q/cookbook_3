@@ -14,3 +14,5 @@ export const SINGLE_RECIPE_ERROR = '@@recipes/SINGLE RECIPE ERROR';
 export const EDIT_RECIPE_ERROR = '@@recipes/EDIT RECIPE ERROR';
 export const REMOVE_RECIPE_ERROR = '@@recipes/REMOVE RECIPE ERROR';
 export const ADD_RECIPE_ERROR = '@@recipes/ADD RECIPE ERROR';
+
+export const RESET_RECIPE_EDIT = '@@recipes/RESET RECIPE EDIT';

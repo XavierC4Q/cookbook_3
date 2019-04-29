@@ -1,19 +1,14 @@
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
+import { IRecipe } from '../../store/reducers/recipe';
 import { IFormValues, Input } from './formFields';
-
-const FILE_SIZE = 160 * 1024;
-const SUPPORTED_FORMATS = [ 'image/jpg', 'image/jpeg', 'image/gif', 'image/png' ];
 
 const validate: Yup.Schema<object> = Yup.object().shape({
 	recipe_name: Yup.string()
 		.min(10, 'recipe_name: Recipe name must be at least 10 characters')
 		.max(50, 'recipe_name: Recipe name cannot exceed 50 characters'),
 	description: Yup.string(),
-	image: Yup.mixed()
-		.test('fileSize', 'image: Image file too large', (value) => value && value.size <= FILE_SIZE)
-		.test('fileFormat', 'image: Unsupported Format', (value) => value && SUPPORTED_FORMATS.includes(value.type)),
 	ingredients: Yup.array().of(
 		Yup.string()
 			.min(4, 'ingredients: Ingredient must be longer than 4 characters')
@@ -23,7 +18,9 @@ const validate: Yup.Schema<object> = Yup.object().shape({
 
 export interface IRecipeForm {
 	initialValues: IFormValues;
-	onSubmit: () => void;
+	onSubmit: (updatedRecipe: Partial<IRecipe>) => void;
+	message: string;
+	recipeId: string;
 }
 
 export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => (
@@ -31,25 +28,21 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => (
 		<Formik
 			initialValues={{...props.initialValues}}
 			validationSchema={validate}
-			onSubmit={(values: IFormValues, actions: FormikActions<IFormValues>) => null}
+			onSubmit={(values: IFormValues, actions: FormikActions<IFormValues>) => {
+				props.onSubmit(values);
+			}}
 			render={({ errors, values, ...actions }: FormikProps<IFormValues>) => {
-
-				const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-					e.preventDefault();
-					try {
-						await actions.validateForm(values);
-						console.log('VALID SUBMISSION');
-						actions.resetForm();
-						actions.submitForm();
-
-					} catch (err) {
-						console.log('INVALID FORM');
-						console.log(errors);
+				const showErrors = () => {
+					if (Object.keys(errors).length) {
+						return Object.values(errors).map((err) => (
+							<p>{err}</p>
+						));
 					}
+					return null;
 				};
 				return (
 					<div>
-						<form onSubmit={formSubmit}>
+						<Form>
 							<Field
 								name='recipe_name'
 								render={({ field, form }: FieldProps<IFormValues>) => {
@@ -81,7 +74,7 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => (
 								render={(arrayHelpers: FieldArrayRenderProps) =>
 
 										values.ingredients &&
-										values.ingredients.length ? values.ingredients.map((ingred, index) => (
+										values.ingredients.length > 0 ? values.ingredients.map((ingred, index) => (
 											<div key={index}>
 												<Field
 													name={`ingredients.${index}`}
@@ -106,6 +99,7 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => (
 												/>
 												<button type='button' onClick={() => arrayHelpers.insert(index, '')}>
 													More Ingredients
+													{/** ADD INGREDIENTS BUTTON NEEDS TO BE MOVED SOMEHOW */}
 												</button>
 											</div>
 										)) :
@@ -114,7 +108,11 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => (
 							<div>
 								<button type='submit'>Submit</button>
 							</div>
-						</form>
+							<div>
+								{props.message}
+								{showErrors()}
+							</div>
+						</Form>
 					</div>
 				);
 			}}

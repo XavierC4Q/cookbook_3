@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
-import { editRecipeThunk, getSingleRecipeThunk } from '../../store/actions/actionCreators/recipe';
+import { editRecipeThunk, getSingleRecipeThunk, resetEditRecipe } from '../../store/actions/actionCreators/recipe';
 import { AppState } from '../../store/config';
 import { IRecipe } from '../../store/reducers/recipe';
 import { IUser } from '../../store/reducers/user';
@@ -24,6 +24,7 @@ interface IStateProps {
 interface IDispatchProps {
 	getSingleRecipe: (recipeId: string) => void;
 	recipeEdit: (recipeId: string, updatedRecipe: Partial<IRecipe>) => void;
+	resetRecipeEdit: () => void;
 }
 
 interface IOwnProps extends RouteComponentProps {
@@ -62,6 +63,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>): IDispatchProp
 	return {
 		getSingleRecipe: (recipeId) => dispatch(getSingleRecipeThunk(recipeId)),
 		recipeEdit: (recipeId, updatedRecipe) => dispatch(editRecipeThunk(recipeId, updatedRecipe)),
+		resetRecipeEdit: () => dispatch(resetEditRecipe()),
 	};
 };
 
