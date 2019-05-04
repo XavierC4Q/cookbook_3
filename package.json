@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/XavierC4Q/cookbook_3#readme",
   "dependencies": {
-    "concurrently": "^4.1.0"
+    "@types/lodash": "^4.14.123",
+    "concurrently": "^4.1.0",
+    "lodash": "^4.17.11"
   }
 }

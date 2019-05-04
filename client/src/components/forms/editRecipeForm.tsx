@@ -16,61 +16,31 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 		editRecipeErr,
 		singleRecipeErr,
 		singleRecipeLoading,
-		getSingleRecipe,
 	} = props;
 
 	const [ editMessage, setEditMessage ] = React.useState('');
 
 	React.useEffect(
 		() => {
-			if (currentUser && profileOwner && currentUser.id !== profileOwner.id) {
-				props.history.push('/');
-			}
 			setEditMessage('');
-			getSingleRecipe(recipeId);
 		},
 		[],
 	);
 
-	const initialFormValues: IFormValues = {
-		recipe_name:
-			singleRecipe ? singleRecipe.recipe_name :
-			'',
-		description:
-			singleRecipe ? singleRecipe.description :
-			'',
-		ingredients:
-			// Single recipe is found and there are ingredients present
-
-				singleRecipe && singleRecipe.ingredients.length > 0 ? singleRecipe.ingredients :
-				[],
-	};
-
 	const handleSubmit = (updatedRecipe: Partial<IRecipe>) => {
-		// NOT QUITE WORKING AS EXPECTED. CHECK EDIT VALUES
-		 Promise.resolve(recipeEdit(recipeId, updatedRecipe))
-		 .then(() => {
-			 if (editSuccess) {
-				 setEditMessage('Recipe Edited Successfully');
-				 setTimeout(() => {
-					 props.resetRecipeEdit();
-					 props.history.push(`/profile/${profileOwner && profileOwner.id}`);
-				 }, 800);
-			 } else {
-				 setEditMessage('Failed to properly edit recipe');
-			 }
-		 }).catch((err) => {
-			 console.log('Something terrible happened in edit recipe');
-		 });
+		Promise.resolve(props.recipeEdit(recipeId, updatedRecipe))
+			.then(() => {
+				console.log('DONE?');
+			});
 	};
+	console.log('SINGLE RECIPE', singleRecipe);
 	return (
 		<div>
 			<h1>Edit Recipe Form</h1>
 			<RecipeForm
-				initialValues={initialFormValues}
+				initialValues={singleRecipe}
 				onSubmit={handleSubmit}
 				message={editMessage}
-				recipeId={recipeId}
 			/>
 		</div>
 	);

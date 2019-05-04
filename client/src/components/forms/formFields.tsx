@@ -39,9 +39,8 @@ export interface IFormValues {
 	ingredients: string[];
 }
 
-interface IInputProps extends FieldProps<IFormValues> {
+interface IInputProps extends Partial<FieldProps<IFormValues>> {
 	label: string;
-	placeholder: string;
 }
 
 export const Input: React.FC<IInputProps> = (props: IInputProps) => {
@@ -51,7 +50,7 @@ export const Input: React.FC<IInputProps> = (props: IInputProps) => {
 				<label>{props.label}</label>
 			</div>
 			<div>
-				<input {...props.field} type='text' placeholder={props.placeholder} />
+				<input {...props.field} type='text' />
 			</div>
 		</section>
 	);

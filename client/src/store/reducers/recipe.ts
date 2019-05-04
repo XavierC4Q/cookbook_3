@@ -130,6 +130,7 @@ export const recipeReducer: Reducer<IRecipeState, AppActions> = (state = initial
 				...state,
 				single_recipe_loading: true,
 				single_recipe_err: '',
+				single_recipe: null,
 			};
 		case types.SINGLE_RECIPE_ERROR:
 			return {

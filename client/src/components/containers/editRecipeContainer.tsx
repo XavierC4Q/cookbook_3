@@ -35,15 +35,17 @@ export type EditRecipeProps = IOwnProps & IStateProps & IDispatchProps;
 
 const EditRecipeContainer: React.FC<EditRecipeProps> = (props: EditRecipeProps): React.ReactNode | any => {
 	React.useEffect(() => {
-		props.getSingleRecipe(props.recipeId);
-	}, []);
-	if (!props.singleRecipe && !props.singleRecipeLoading) {
-		return <div>Recipe Loading</div>;
-	}
+		if (props.currentUser && props.profileOwner && props.currentUser.id !== props.profileOwner.id) {
+			props.history.push('/');
+		} else {
+			props.getSingleRecipe(props.recipeId);
+		}
+	}, [ props.getSingleRecipe ]);
+
 	if (props.currentUser && props.profileOwner && props.currentUser.id === props.profileOwner.id) {
 		return <EditRecipeForm {...props} />;
 	}
-	return <Redirect to='/' />;
+	return <Redirect to='/'/>;
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
