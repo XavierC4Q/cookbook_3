@@ -6,42 +6,35 @@ import { RecipeForm } from './recipeForm';
 
 const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 	const {
-		currentUser,
 		singleRecipe,
 		recipeId,
-		recipeEdit,
 		profileOwner,
-		editLoading,
-		editSuccess,
-		editRecipeErr,
-		singleRecipeErr,
-		singleRecipeLoading,
 	} = props;
 
 	const [ editMessage, setEditMessage ] = React.useState('');
 
-	React.useEffect(
-		() => {
-			setEditMessage('');
-		},
-		[],
-	);
+	React.useEffect(() => {
+		setEditMessage('');
+	}, []);
 
 	const handleSubmit = (updatedRecipe: Partial<IRecipe>) => {
-		Promise.resolve(props.recipeEdit(recipeId, updatedRecipe))
-			.then(() => {
-				console.log('DONE?');
-			});
+		Promise.resolve(props.recipeEdit(recipeId, updatedRecipe)).then((success: boolean | void) => {
+			if (success) {
+				setEditMessage('Recipe edited successfully. Redirecting');
+				setTimeout(() => {
+					props.resetRecipeEdit();
+					props.history.push(`/profile/${profileOwner && profileOwner.id}`);
+				}, 2000);
+			} else {
+				setEditMessage('Failed to edit successfully');
+			}
+		});
 	};
-	console.log('SINGLE RECIPE', singleRecipe);
+
 	return (
 		<div>
 			<h1>Edit Recipe Form</h1>
-			<RecipeForm
-				initialValues={singleRecipe}
-				onSubmit={handleSubmit}
-				message={editMessage}
-			/>
+			<RecipeForm initialValues={singleRecipe} onSubmit={handleSubmit} message={editMessage} />
 		</div>
 	);
 };
