@@ -9,6 +9,7 @@ import { IRecipe } from '../../store/reducers/recipe';
 import { IUser } from '../../store/reducers/user';
 
 import EditRecipeForm from '../forms/editRecipeForm';
+import { IFormValues } from '../forms/formFields';
 
 interface IStateProps {
 	singleRecipe: IRecipe | null;
@@ -23,7 +24,7 @@ interface IStateProps {
 
 interface IDispatchProps {
 	getSingleRecipe: (recipeId: string) => void;
-	recipeEdit: (recipeId: string, updatedRecipe: Partial<IRecipe>) => void;
+	recipeEdit: (recipeId: string, updatedRecipe: IFormValues) => void;
 	resetRecipeEdit: () => void;
 }
 

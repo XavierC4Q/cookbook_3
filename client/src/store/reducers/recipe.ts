@@ -12,7 +12,7 @@ export interface IRecipe {
 	ingredients: string[];
 	favorite_count: number;
 	description: string;
-	image?: File | null | undefined;
+	image?: string | null | undefined;
 }
 
 export interface IRecipeState {

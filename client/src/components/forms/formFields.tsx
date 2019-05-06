@@ -37,7 +37,7 @@ export interface IFormValues {
 	recipe_name: string;
 	description: string;
 	ingredients: string[];
-	image: File | null | undefined;
+	image: string | null | undefined | FormData;
 }
 
 interface IInputProps extends Partial<FieldProps<IFormValues>> {

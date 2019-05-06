@@ -45,7 +45,7 @@ const validate: Yup.Schema<object> = Yup.object().shape({
  */
 export interface IRecipeForm {
 	initialValues?: IRecipe | null;
-	onSubmit: (recipe: Partial<IRecipe>) => void;
+	onSubmit: (recipe: IFormValues) => void;
 	message: string;
 }
 
@@ -71,6 +71,11 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 		ingredients: [],
 		image: null,
 	});
+	const [ file, setFile ] = React.useState('');
+
+	const handleFile = (e: React.FormEvent<HTMLInputElement>) => {
+		setFile(e.currentTarget.value);
+	};
 
 	/**
 	 * Effect for setting the initial values of the form. The original values will
@@ -97,11 +102,12 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 				initialValues={{ ...initValues }}
 				validationSchema={validate}
 				onSubmit={(values: IFormValues, actions: FormikActions<IFormValues>) => {
-					props.onSubmit(values);
+					const formData = new FormData();
+					formData.append('image', file);
+					props.onSubmit({ ...values, image: formData });
 				}}
 				enableReinitialize // Needed to update initialValues properly
 				render={({ errors, values, ...actions }: FormikProps<IFormValues>) => {
-					console.log('FORMIK VALUES', values);
 					return (
 						<div>
 							<Form>
@@ -126,7 +132,9 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 								<Field
 									name='image'
 									render={({ field }: FieldProps<IFormValues>) => {
-										return <input {...field} type='file' name='image' />;
+										return (
+											<input onChange={handleFile} type='file' name='image' accept='image/*' />
+										);
 									}}
 								/>
 								<FieldArray

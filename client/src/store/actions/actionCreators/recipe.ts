@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IFormValues } from '../../../components/forms/formFields';
 import { AppActions, AppThunk } from '../../config';
 import * as types from '../../constants/recipe';
 import { IRecipe } from '../../reducers/recipe';
@@ -27,12 +28,17 @@ export const getSingleRecipeThunk = (recipeId: string): AppThunk<void> => (dispa
 	}, 1200);
 };
 
-export const editRecipeThunk = (recipeId: string, updatedRecipe: Partial<IRecipe>): AppThunk<void> => async (
+export const editRecipeThunk = (recipeId: string, updatedRecipe: IFormValues): AppThunk<void> => async (
 	dispatch,
 ) => {
 	dispatch<AppActions>({ type: types.EDIT_LOADING });
+	console.log('UPDATED RECIPE', updatedRecipe);
 	try {
-		await axios.patch(`/cookbook/recipe/${recipeId}/`, updatedRecipe);
+		await axios.patch(`/cookbook/recipe/${recipeId}/`, updatedRecipe, {
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		});
 		dispatch<AppActions>({ type: types.EDIT_RECIPE });
 		return true;
 	} catch (err) {

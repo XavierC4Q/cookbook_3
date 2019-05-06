@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { IRecipe } from '../../store/reducers/recipe';
 import { EditRecipeProps } from '../containers/editRecipeContainer';
 import { IFormValues } from './formFields';
 import { RecipeForm } from './recipeForm';
 
 const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
-	const {
-		singleRecipe,
-		recipeId,
-		profileOwner,
-	} = props;
+	const { singleRecipe, recipeId, profileOwner } = props;
 
 	const [ editMessage, setEditMessage ] = React.useState('');
 
@@ -17,14 +12,14 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 		setEditMessage('');
 	}, []);
 
-	const handleSubmit = (updatedRecipe: Partial<IRecipe>) => {
+	const handleSubmit = (updatedRecipe: IFormValues) => {
 		Promise.resolve(props.recipeEdit(recipeId, updatedRecipe)).then((success: boolean | void) => {
 			if (success) {
 				setEditMessage('Recipe edited successfully. Redirecting');
-				setTimeout(() => {
-					props.resetRecipeEdit();
-					props.history.push(`/profile/${profileOwner && profileOwner.id}`);
-				}, 2000);
+				// setTimeout(() => {
+				// 	props.resetRecipeEdit();
+				// 	props.history.push(`/profile/${profileOwner && profileOwner.id}`);
+				// }, 2000);
 			} else {
 				setEditMessage('Failed to edit successfully');
 			}
