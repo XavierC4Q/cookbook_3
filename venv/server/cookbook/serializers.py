@@ -95,7 +95,7 @@ class UserSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
 
     favorite_count = serializers.SerializerMethodField(read_only=True)
-    owner = UserSerializer()
+    owner = UserSerializer(read_only=True)
 
     @staticmethod
     def get_favorite_count(self):
@@ -110,8 +110,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class FollowSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer()
-    follows = UserSerializer()
+    user = UserSerializer(read_only=True)
+    follows = UserSerializer(read_only=True)
 
     class Meta:
 
@@ -123,8 +123,8 @@ class FollowSerializer(serializers.ModelSerializer):
 
 class FavoriteSerializer(serializers.ModelSerializer):
 
-    favorited_by = UserSerializer()
-    recipe = RecipeSerializer()
+    favorited_by = UserSerializer(read_only=True)
+    recipe = RecipeSerializer(read_only=True)
 
     class Meta:
 

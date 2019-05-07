@@ -1,3 +1,4 @@
+from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -29,6 +30,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
+    parser_classes = (JSONParser, FormParser, MultiPartParser,)
 
     @action(detail=False, methods=["GET"])
     def user_recipes(self, request):
@@ -37,6 +39,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(res, many=True)
         return Response(serializer.data)
+
 
 
 class FollowViewSet(viewsets.ModelViewSet):
