@@ -24,7 +24,7 @@ interface IStateProps {
 
 interface IDispatchProps {
 	getSingleRecipe: (recipeId: string) => void;
-	recipeEdit: (recipeId: string, updatedRecipe: IFormValues) => void;
+	recipeEdit: (recipeId: string, updatedRecipe: FormData) => void;
 	resetRecipeEdit: () => void;
 }
 

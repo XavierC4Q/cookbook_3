@@ -12,7 +12,7 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 		setEditMessage('');
 	}, []);
 
-	const handleSubmit = (updatedRecipe: IFormValues) => {
+	const handleSubmit = (updatedRecipe: FormData) => {
 		Promise.resolve(props.recipeEdit(recipeId, updatedRecipe)).then((success: boolean | void) => {
 			if (success) {
 				setEditMessage('Recipe edited successfully. Redirecting');

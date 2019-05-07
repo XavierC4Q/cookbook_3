@@ -13,7 +13,7 @@ interface IFieldProps {
 	select_options?: string[];
 }
 
-const showErrors = (errs: IFormErrors): React.ReactNodeArray => errs.map((e: string) => <p>{e}</p>);
+const showErrors = (errs: IFormErrors): React.ReactNodeArray => errs.map((e: string, i: number) => <p key={i}>{e}</p>);
 
 export const Field: React.FC<IFieldProps> = (props: IFieldProps) => (
 	<section>
@@ -37,7 +37,7 @@ export interface IFormValues {
 	recipe_name: string;
 	description: string;
 	ingredients: string[];
-	image: string | null | undefined | FormData;
+	image: string | null | undefined | File;
 }
 
 interface IInputProps extends Partial<FieldProps<IFormValues>> {

@@ -28,15 +28,13 @@ export const getSingleRecipeThunk = (recipeId: string): AppThunk<void> => (dispa
 	}, 1200);
 };
 
-export const editRecipeThunk = (recipeId: string, updatedRecipe: IFormValues): AppThunk<void> => async (
-	dispatch,
-) => {
+export const editRecipeThunk = (recipeId: string, updatedRecipe: FormData): AppThunk<void> => async (dispatch) => {
 	dispatch<AppActions>({ type: types.EDIT_LOADING });
-	console.log('UPDATED RECIPE', updatedRecipe);
 	try {
 		await axios.patch(`/cookbook/recipe/${recipeId}/`, updatedRecipe, {
 			headers: {
-				'content-type': 'multipart/form-data',
+				'Content-Type': 'multipart/form-data',
+				'Accept': 'application/json',
 			},
 		});
 		dispatch<AppActions>({ type: types.EDIT_RECIPE });

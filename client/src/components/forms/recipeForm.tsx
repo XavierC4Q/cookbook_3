@@ -45,7 +45,7 @@ const validate: Yup.Schema<object> = Yup.object().shape({
  */
 export interface IRecipeForm {
 	initialValues?: IRecipe | null;
-	onSubmit: (recipe: IFormValues) => void;
+	onSubmit: (recipe: FormData) => void;
 	message: string;
 }
 
@@ -55,7 +55,7 @@ export interface IRecipeForm {
  * @description Helper that takes an array of Formik errors and maps the individual
  * errors to p tags.
  */
-const showErrors = (errors: FormikErrors<IFormValues>) => Object.values(errors).map((err) => <p>{err}</p>);
+const showErrors = (errors: FormikErrors<IFormValues>) => Object.values(errors).map((err, i) => <p key={i}>{err}</p>);
 
 /**
  * @constant RecipeForm
@@ -69,13 +69,8 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 		recipe_name: '',
 		description: '',
 		ingredients: [],
-		image: null,
+		image: '',
 	});
-	const [ file, setFile ] = React.useState('');
-
-	const handleFile = (e: React.FormEvent<HTMLInputElement>) => {
-		setFile(e.currentTarget.value);
-	};
 
 	/**
 	 * Effect for setting the initial values of the form. The original values will
@@ -103,8 +98,13 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 				validationSchema={validate}
 				onSubmit={(values: IFormValues, actions: FormikActions<IFormValues>) => {
 					const formData = new FormData();
-					formData.append('image', file);
-					props.onSubmit({ ...values, image: formData });
+					formData.append('image', values.image as File | string);
+					formData.append('recipe_name', values.recipe_name);
+					formData.append('description', values.description);
+					for (const k in values.ingredients) {
+						formData.append(`ingredients[${k}]`, values.ingredients[k]);
+					}
+					props.onSubmit(formData);
 				}}
 				enableReinitialize // Needed to update initialValues properly
 				render={({ errors, values, ...actions }: FormikProps<IFormValues>) => {
@@ -133,7 +133,17 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 									name='image'
 									render={({ field }: FieldProps<IFormValues>) => {
 										return (
-											<input onChange={handleFile} type='file' name='image' accept='image/*' />
+											<input
+												type='file'
+												accept='image/*'
+												onChange={(e) => {
+													actions.setFieldValue(
+														'image',
+															e.currentTarget.files ? e.currentTarget.files[0] :
+															'',
+													);
+												}}
+											/>
 										);
 									}}
 								/>
