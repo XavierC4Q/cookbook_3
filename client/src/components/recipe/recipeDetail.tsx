@@ -24,7 +24,7 @@ const RecipeDetail: React.FC<IRecipeDetailProps> = (props: IRecipeDetailProps) =
 		}
 		return null;
 	};
-	console.log(props.ingredients);
+
 	return (
 		<div className='recipe-detail-cont'>
 			<section className='recipe-detail-header-section'>

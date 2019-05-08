@@ -84,7 +84,6 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 					recipe_name: props.initialValues.recipe_name,
 					description: props.initialValues.description,
 					ingredients: (props.initialValues.ingredients as string[]),
-					image: props.initialValues.image,
 				});
 			}
 		},
@@ -98,7 +97,6 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 				validationSchema={validate}
 				onSubmit={(values: IFormValues, actions: FormikActions<IFormValues>) => {
 					const formData = new FormData();
-					console.log(values.image);
 					if (values.image) {
 						formData.append('image', values.image as File | string);
 					}
