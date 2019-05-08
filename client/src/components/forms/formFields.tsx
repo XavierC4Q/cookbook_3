@@ -36,7 +36,7 @@ export const Field: React.FC<IFieldProps> = (props: IFieldProps) => (
 export interface IFormValues {
 	recipe_name: string;
 	description: string;
-	ingredients: string[];
+	ingredients: string[] | string;
 	image: string | null | undefined | File;
 }
 

@@ -16,10 +16,10 @@ const EditRecipeForm: React.FC<EditRecipeProps> = (props: EditRecipeProps) => {
 		Promise.resolve(props.recipeEdit(recipeId, updatedRecipe)).then((success: boolean | void) => {
 			if (success) {
 				setEditMessage('Recipe edited successfully. Redirecting');
-				// setTimeout(() => {
-				// 	props.resetRecipeEdit();
-				// 	props.history.push(`/profile/${profileOwner && profileOwner.id}`);
-				// }, 2000);
+				setTimeout(() => {
+					props.resetRecipeEdit();
+					props.history.push(`/profile/${profileOwner && profileOwner.id}`);
+				}, 2000);
 			} else {
 				setEditMessage('Failed to edit successfully');
 			}

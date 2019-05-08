@@ -9,7 +9,7 @@ export interface IRecipe {
 	recipe_name: string;
 	created: Date;
 	updated: Date;
-	ingredients: string[];
+	ingredients: string[] | string;
 	favorite_count: number;
 	description: string;
 	image?: string | null | undefined;

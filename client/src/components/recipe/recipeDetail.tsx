@@ -24,6 +24,7 @@ const RecipeDetail: React.FC<IRecipeDetailProps> = (props: IRecipeDetailProps) =
 		}
 		return null;
 	};
+	console.log(props.ingredients);
 	return (
 		<div className='recipe-detail-cont'>
 			<section className='recipe-detail-header-section'>
@@ -56,7 +57,10 @@ const RecipeDetail: React.FC<IRecipeDetailProps> = (props: IRecipeDetailProps) =
 				<div className='detail-content'>
 					<div className='ingredients-cont'>
 						<h4>Ingredients</h4>
-						{props.ingredients.map((ingred, i) => <p key={i}>{ingred}</p>)}
+						{props.ingredients &&
+							(props.ingredients as string[]).map((ingred, i) => (
+								<p key={i}>{ingred}</p>
+							))}
 					</div>
 					<div className='description-cont'>
 						<p>{props.description}</p>

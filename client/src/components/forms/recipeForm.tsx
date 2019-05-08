@@ -83,7 +83,7 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 					...initValues,
 					recipe_name: props.initialValues.recipe_name,
 					description: props.initialValues.description,
-					ingredients: props.initialValues.ingredients,
+					ingredients: (props.initialValues.ingredients as string[]),
 					image: props.initialValues.image,
 				});
 			}
@@ -98,16 +98,18 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 				validationSchema={validate}
 				onSubmit={(values: IFormValues, actions: FormikActions<IFormValues>) => {
 					const formData = new FormData();
-					formData.append('image', values.image as File | string);
+					console.log(values.image);
+					if (values.image) {
+						formData.append('image', values.image as File | string);
+					}
 					formData.append('recipe_name', values.recipe_name);
 					formData.append('description', values.description);
-					for (const k in values.ingredients) {
-						formData.append(`ingredients[${k}]`, values.ingredients[k]);
-					}
+					formData.append('ingredients', JSON.stringify(values.ingredients));
 					props.onSubmit(formData);
 				}}
 				enableReinitialize // Needed to update initialValues properly
 				render={({ errors, values, ...actions }: FormikProps<IFormValues>) => {
+					console.log(values);
 					return (
 						<div>
 							<Form>
@@ -151,7 +153,7 @@ export const RecipeForm: React.FC<IRecipeForm> = (props: IRecipeForm) => {
 									name='ingredients'
 									render={(arrayHelpers: FieldArrayRenderProps) => (
 										<div>
-											{values.ingredients.map((_, index) => (
+											{values.ingredients && (values.ingredients as string[]).map((_, index) => (
 												<div key={index}>
 													<Field
 														name={`ingredients[${index}]`}

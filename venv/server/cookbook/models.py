@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
+from jsonfield import JSONField
 from django.core.validators import MinLengthValidator
 
 
@@ -61,10 +62,7 @@ class Recipe(models.Model):
         blank=True,
         null=True
     )
-    ingredients = ArrayField(
-        models.CharField(max_length=50, blank=False, null=False),
-        default=list
-    )
+    ingredients = JSONField(default=dict)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
