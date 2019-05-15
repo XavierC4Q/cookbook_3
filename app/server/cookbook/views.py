@@ -47,6 +47,15 @@ class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = FollowSerializer
     queryset = Follow.objects.all()
 
+    @action(detail=False, methods=['GET'])
+    def user_follows(self, request):
+        user_id = request.GET.get("user_id", 0)
+
+        res = Follow.objects.filter(user__id=user_id)
+
+        serializer = self.get_serializer(res, many=True)
+        return Response(serializer.data)
+
 
 class FavoriteViewSet(viewsets.ModelViewSet):
 
