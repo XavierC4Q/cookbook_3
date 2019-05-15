@@ -1,0 +1,26 @@
+{
+  "name": "cookbookv3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd client && npm start\" \"cd venv && source bin/activate && cd .. && cd server && python3 manage.py runserver\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XavierC4Q/cookbook_3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XavierC4Q/cookbook_3/issues"
+  },
+  "homepage": "https://github.com/XavierC4Q/cookbook_3#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.123",
+    "concurrently": "^4.1.0",
+    "lodash": "^4.17.11"
+  }
+}
