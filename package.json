@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd client && npm start\" \"cd venv && source bin/activate && cd .. && cd server && python3 manage.py runserver\""
+    "start": "concurrently \"cd app/venv && source bin/activate\" \"cd app/client && npm start\" \"cd app/server && python3 manage.py runserver\""
   },
   "repository": {
     "type": "git",

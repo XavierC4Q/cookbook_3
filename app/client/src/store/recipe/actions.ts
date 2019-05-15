@@ -61,10 +61,8 @@ export const EditRecipeAction = (recipe: INewRecipe): Thunk<void> => (dispatch) 
 					ingredients: JSON.parse((updatedRecipe.data.ingredients as string).replace(/'/g, '"')),
 				}),
             );
-            return true;
 		} catch (err) {
             dispatch(SingleRecipe.failure('Failed to properly edit recipe'));
-            return false;
 		}
 	}, 1200);
 };
