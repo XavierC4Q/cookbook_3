@@ -12,37 +12,37 @@ Cookbook is a web (and soon to be mobile) app for posting and sharing recipes. T
 
 ## Current Features
 
-*User authentication.
-*Profiles for a users recipes.
-*Edit recipes you create.
+* User authentication.
+* Profiles for a users recipes.
+* Edit recipes you create.
 
 ***
 
 ## In Progress
 
-*Following and unfollowing users.
-*Adding recipes.
-*Styling
+* Following and unfollowing users.
+* Adding recipes.
+* Styling
 
 ***
 
 ## Future Features
 
-*Forking recipes.
-*Editing user details.
-*User feed of recipes.
-*Deployment.
+* Forking recipes.
+* Editing user details.
+* User feed of recipes.
+* Deployment.
 
 ***
 
 ### Tech
 
-*React/ React-Redux
-*React-Router
-*Thunk
-*Typescript
-*[Typesafe-Actions](https://github.com/piotrwitek/typesafe-actions#createstandardaction)
-*Django and [Django REST Framework](https://www.django-rest-framework.org/)
-*[Formik](https://jaredpalmer.com/formik/)
-*Yup
-*Postgres
+* React/ React-Redux
+* React-Router
+* Thunk
+* Typescript
+* [Typesafe-Actions](https://github.com/piotrwitek/typesafe-actions#createstandardaction)
+* Django and [Django REST Framework](https://www.django-rest-framework.org/)
+* [Formik](https://jaredpalmer.com/formik/)
+* Yup
+* Postgres
