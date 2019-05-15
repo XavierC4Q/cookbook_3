@@ -1,9 +1,8 @@
 from rest_framework import serializers
 from .models import User, Recipe, Follow, Favorite
 from allauth.account import app_settings as allauth_settings
-from allauth.utils import (email_address_exists,
-                            get_username_max_length)
-from allauth.account.adapter import get_adapter
+from allauth.utils import (email_address_exists, get_username_max_length)
+from .adapter import CustomAdapter
 from allauth.account.utils import setup_user_email
 
 
@@ -20,11 +19,11 @@ class RegisterSerializer (serializers.Serializer):
     country = serializers.CharField(max_length=30)
 
     def validate_username(self, username):
-        username = get_adapter().clean_username(username)
+        username = CustomAdapter().clean_username(username)
         return username
 
     def validate_email(self, email):
-        email = get_adapter().clean_email(email)
+        email = CustomAdapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
                 raise serializers.ValidationError(
@@ -32,7 +31,10 @@ class RegisterSerializer (serializers.Serializer):
         return email
 
     def validate_password1(self, password):
-        return get_adapter().clean_password(password)
+        return CustomAdapter().clean_password(password)
+
+    def validate_country(self, country):
+        return CustomAdapter().clean_country(country)
 
     def validate(self, data):
         if data['password1'] != data['password2']:
@@ -48,7 +50,7 @@ class RegisterSerializer (serializers.Serializer):
         }
 
     def save(self, request):
-        adapter = get_adapter()
+        adapter = CustomAdapter()
         user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
