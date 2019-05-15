@@ -1,11 +1,11 @@
 import { createReducer } from 'typesafe-actions';
 import { combineReducers } from 'redux';
-import { SingleUserActionType as SingleUser, MultiUserActionType as MultiUsers } from './types';
+import { SingleUserActionType as SingleUser, MultiUserActionType as MultiUsers, IUserFollow, IUserFavorite, MultiUserTypes } from './types';
 import { IUser } from '../auth/types';
 
 const singleUser = createReducer(null as null | IUser).handleAction(SingleUser.success, (state, action) => action.payload);
 
-const listOfUsers = createReducer([] as IUser[]).handleAction(MultiUsers.success, (state, action) => action.payload);
+const listOfUsers = createReducer([] as MultiUserTypes).handleAction(MultiUsers.success, (state, action) => action.payload);
 
 const loadingSingleUser = createReducer(false as boolean)
     .handleAction(SingleUser.request, () => true)

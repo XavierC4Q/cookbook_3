@@ -3,7 +3,7 @@ import { Route, RouteComponentProps } from 'react-router-dom';
 
 import AuthContainer from './containers/AuthContainer';
 import ProfileContainer from './containers/ProfileContainer';
-import EditRecipe from './EditRecipe';
+import EditRecipe from './recipe/EditRecipe';
 import Main from './Main';
 
 const Content: React.FC<{}> = () => (

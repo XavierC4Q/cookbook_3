@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { IRecipe } from '../store/recipe/types';
-import { IUser } from '../store/auth/types';
+import { IRecipe } from '../../store/recipe/types';
+import { IUser } from '../../store/auth/types';
 
 interface IRecipeDetail {
 	recipe: IRecipe | null;

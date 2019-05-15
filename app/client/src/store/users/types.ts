@@ -1,5 +1,22 @@
 import { createAsyncAction } from 'typesafe-actions';
 import { IUser } from '../auth/types';
+import { IRecipe } from '../recipe/types';
+
+export interface IUserFollow {
+    id: number;
+    followed_on: Date;
+    user: IUser;
+    follows: IUser;
+}
+
+export interface IUserFavorite {
+    id: number;
+    favorited_by: IUser;
+    recipe: IRecipe;
+    favorited_on: Date;
+}
+
+export type MultiUserTypes = IUser[] | IUserFavorite[] | IUserFollow[];
 
 export const SingleUserActionType = createAsyncAction(
     '@@profile/SINGLE USER REQUEST',
@@ -11,7 +28,7 @@ export const MultiUserActionType = createAsyncAction(
     '@@profile/USERS REQUEST',
     '@@profile/USERS SUCCESS',
     '@@profile/USERS ERROR'
-)<undefined, IUser[], string>();
+)<undefined, MultiUserTypes, string>();
 
 const UserActionTypes = {
     SingleUserActionType,

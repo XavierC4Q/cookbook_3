@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IRecipe } from '../store/recipe/types';
-import { IUser } from '../store/auth/types';
+import { IRecipe } from '../../store/recipe/types';
+import { IUser } from '../../store/auth/types';
 
 import RecipeDetail from './RecipeDetail';
 import RecipeItem from './RecipeItem';

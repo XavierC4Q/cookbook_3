@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { IUser } from '../../store/auth/types';
+import { IUser } from '../store/auth/types';
 
 const ProfileLink = (user: IUser): React.ReactNode => {
 	const link = `/profile/${user.id}`;

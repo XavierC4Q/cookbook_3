@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IRecipe } from '../store/recipe/types';
+import { IRecipe } from '../../store/recipe/types';
 
 interface IOwnProps {
 	recipe: IRecipe;

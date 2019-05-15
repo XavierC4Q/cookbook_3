@@ -4,7 +4,7 @@ import { LoggedInAction } from './store/auth/actions';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { RootState, Dispatch } from 'typesafe-actions';
 
-import Header from './components/header/Header';
+import Header from './components/Header';
 import Content from './components/Content';
 import Footer from './components/Footer';
 

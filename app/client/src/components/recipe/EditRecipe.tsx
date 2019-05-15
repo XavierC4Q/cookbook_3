@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { RootState, Dispatch } from 'typesafe-actions';
-import { EditRecipeAction, GetSingleRecipeAction } from '../store/recipe/actions';
-import { INewRecipe } from '../store/recipe/types';
+import { EditRecipeAction, GetSingleRecipeAction } from '../../store/recipe/actions';
+import { INewRecipe } from '../../store/recipe/types';
 
 import RecipeForm from './RecipeForm';
 
