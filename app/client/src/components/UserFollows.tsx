@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'typesafe-actions';
-import { IUserFollow, MultiUserTypes } from '../store/users/types';
+import { IUserFollow, TUserTypes } from '../store/users/types';
 import { IUser } from '../store/auth/types';
 
 const stateProps = (state: RootState) => ({
-    follows: state.users.users as MultiUserTypes,
+    follows: state.users.users as TUserTypes,
     loading: state.users.loadingUsers,
     err: state.users.usersError,
 });

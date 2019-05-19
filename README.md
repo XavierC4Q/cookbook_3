@@ -21,6 +21,7 @@ Cookbook is a web (and soon to be mobile) app for posting and sharing recipes. T
 ## In Progress
 
 * Following and unfollowing users.
+* Favoriting and unfavoriting recipes.
 * Adding recipes.
 * Styling
 

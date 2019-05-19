@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { RootState, Dispatch } from 'typesafe-actions';
 import { GetProfileOwnerAction, GetFollowersAction } from '../../store/users/actions';
 import { GetUserRecipesAction } from '../../store/recipe/actions';
+import { IRecipe } from '../../store/recipe/types';
 
 import RecipeList from '../recipe/RecipeList';
 import UserFollows from '../UserFollows';
@@ -35,7 +36,7 @@ const ProfileContainer: React.FC<Props> = (props) => {
             {props.owner && <ProfileHeader {...props.owner}/>}
             <Route exact path='/profile/:id' render={() => (
                 <RecipeList 
-                    recipes={props.recipes} 
+                    recipes={props.recipes as IRecipe[]} 
                     currentUser={props.currentUser}
                     owner={props.owner}
                     title='Recipes'

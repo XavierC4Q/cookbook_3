@@ -1,8 +1,8 @@
 import { IUser } from '../auth/types';
-import { createAsyncAction } from 'typesafe-actions';
+import { createAsyncAction, createStandardAction } from 'typesafe-actions';
 
 export interface IRecipe {
-    readonly id: number;
+	readonly id: number;
 	readonly owner: IUser;
 	recipe_name: string;
 	readonly created: Date;
@@ -14,33 +14,55 @@ export interface IRecipe {
 }
 
 export interface INewRecipe {
-    id: string;
-    data: FormData;
+	id: string;
+	data: FormData;
 }
 
 export interface IRecipeFormValues {
-    recipe_name: string;
-    ingredients: string[];
-    description: string;
-    image: File | string;
+	recipe_name: string;
+	ingredients: string[];
+	description: string;
+	image: File | string;
 }
 
+export interface IRecipeFavorite {
+	id: number;
+	favorited_by: IUser;
+	recipe: IRecipe;
+	favorited_on: Date;
+}
 
-export const AllUserRecipeActionType = createAsyncAction(
-    '@@recipe/ALL USER RECIPES REQUEST',
-    '@@recipe/ALL USER RECIPES SUCCESS',
-    '@@recipe/ALL USER RECIPES ERROR'
-)<undefined, IRecipe[], string>();
+export type TRecipe = IRecipe[] | IRecipeFavorite[];
 
-export const SingleRecipeActionType = createAsyncAction(
-    '@@recipe/SINGLE RECIPE REQUEST',
-    '@@recipe/SINGLE RECIPE SUCCESS',
-    '@@recipe/SINGLE RECIPE ERROR'
+export const TRecipeListAction = createAsyncAction(
+	'@@recipe/ALL USER RECIPES REQUEST',
+	'@@recipe/ALL USER RECIPES SUCCESS',
+	'@@recipe/ALL USER RECIPES ERROR',
+)<undefined, TRecipe, string>();
+
+export const TSingleRecipeAction = createAsyncAction(
+	'@@recipe/SINGLE RECIPE REQUEST',
+	'@@recipe/SINGLE RECIPE SUCCESS',
+	'@@recipe/SINGLE RECIPE ERROR',
 )<undefined, IRecipe, string>();
 
+const TFavoriteRecipeSuccess = createStandardAction('@@recipe/FAVORITE SUCCESS')();
+
+const TFavoriteRecipeFailure = createStandardAction('@@recipe/FAVORITE FAILURE')();
+
+const TUnfavoriteRecipeSuccess = createStandardAction('@@recipe/UNFAVORITE SUCCESS')();
+
+const TUnfavoriteRecipeFailure = createStandardAction('@@recipe/UNFAVORITE FAILURE')();
+
+export const FavoriteRecipe = { TFavoriteRecipeFailure, TFavoriteRecipeSuccess };
+
+export const UnfavoriteRecipe = { TUnfavoriteRecipeFailure, TUnfavoriteRecipeSuccess };
+
 const RecipeActionTypes = {
-    AllUserRecipeActionType,
-    SingleRecipeActionType
+	TRecipeListAction,
+    TSingleRecipeAction,
+    FavoriteRecipe,
+    UnfavoriteRecipe
 };
 
 export default RecipeActionTypes;

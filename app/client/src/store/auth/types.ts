@@ -26,36 +26,23 @@ export interface IUser {
 	profile_image: string | null;
 }
 
-export const LoggedInUserActionType = createAsyncAction(
-    '@@auth/LOGGED IN USER REQUEST',
-	'@@auth/LOGGED IN USER SUCCESS',
-	'@@auth/LOGGED IN USER ERROR',
+export const TAuthenticateAction = createAsyncAction(
+	'@@auth/AUTHENTICATE REQUEST',
+	'@@auth/AUTHENTICATE SUCCESS',
+	'@@auth/AUTHENTICATE ERROR'
 )<undefined, IUser, string>();
 
-export const LoginActionType = createAsyncAction(
-    '@@auth/LOGIN REQUEST',
-	'@@auth/LOGIN SUCCESS',
-	'@@auth/LOGIN ERROR',
-)<undefined, IUser, string>();
-
-export const LogoutActionType = createAsyncAction(
+export const TLogoutAction = createAsyncAction(
     '@@auth/LOGOUT REQUEST',
 	'@@auth/LOGOUT SUCCESS',
 	'@@auth/LOGOUT ERROR',
 )<undefined, undefined, string>();
 
-export const SignUpActionType = createAsyncAction(
-    '@@auth/SIGNUP REQUEST',
-	'@@auth/SIGNUP SUCCESS',
-	'@@auth/SIGNUP ERROR',
-)<undefined, IUser, string>();
 
 
 const AuthActionTypes = {
-    LoginActionType,
-    LogoutActionType,
-    LoggedInUserActionType,
-    SignUpActionType
+    TAuthenticateAction,
+    TLogoutAction,
 }
 
 export default AuthActionTypes;

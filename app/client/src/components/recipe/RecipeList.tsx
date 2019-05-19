@@ -5,6 +5,7 @@ import { IUser } from '../../store/auth/types';
 import RecipeDetail from './RecipeDetail';
 import RecipeItem from './RecipeItem';
 
+
 interface IOwnProps {
 	recipes: IRecipe[];
 	currentUser: IUser | null;
@@ -13,13 +14,8 @@ interface IOwnProps {
 	getRecipes: (id: string) => void;
 }
 
-const handleTitle = (currentUser: IUser, owner: IUser): string => {
-	if (currentUser.id === owner.id) return 'Your';
-	return 'Their';
-};
-
 const RecipeList: React.FC<IOwnProps> = (props) => {
-    const { owner, getRecipes } = props;
+    const { getRecipes, currentUser, owner } = props;
 	React.useEffect(
 		() => {
 			if (owner) {
@@ -30,6 +26,11 @@ const RecipeList: React.FC<IOwnProps> = (props) => {
 	);
 
 	const [ selectedRecipe, selectRecipe ] = React.useState<IRecipe | null>(null);
+
+	const handleTitle = (): string => {
+        if (currentUser && owner && currentUser.id === owner.id) return 'Your';
+        return 'Their';
+    };
 
 	const setRecipeDetail = (id: number) => {
 		const findRecipe = props.recipes.find((r) => r.id === id);
@@ -55,7 +56,7 @@ const RecipeList: React.FC<IOwnProps> = (props) => {
 
 	return (
 		<div>
-			<h2>{props.currentUser && props.owner && `${handleTitle(props.currentUser, props.owner)} ${props.title}`}</h2>
+			<h2>{`${handleTitle()} ${props.title}`}</h2>
 			{props.recipes.map((recipe, index) => {
 				return <RecipeItem key={index} recipe={recipe} setRecipeDetail={setRecipeDetail} />;
 			})}
