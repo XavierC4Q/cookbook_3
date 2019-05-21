@@ -70,22 +70,26 @@ export const EditRecipeAction = (recipe: INewRecipe): Thunk<void> => (dispatch) 
 	}, 1200);
 };
 
-export const FavoriteRecipeAction = ({
-	favoritedBy,
-	recipe,
-}: {
-	favoritedBy: IUser;
-	recipe: IRecipe;
-}): Thunk<void> => async (dispatch) => {
+export const FavoriteRecipeAction = (favoritedBy: IUser, recipe: IRecipe): Thunk<void> => async (dispatch) => {
+	console.log('FAVORITED BY', favoritedBy)
 	try {
-		await axios.post('/cookbook/favorite/', { favoritedBy, recipe });
+		await axios.post('/cookbook/favorite/',  {
+			data: {
+				favorited_by: favoritedBy,
+				recipe,
+			},
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'application/json',
+			},
+		});
 		dispatch(FavoriteRecipe.TFavoriteRecipeSuccess());
 	} catch (err) {
 		dispatch(FavoriteRecipe.TFavoriteRecipeFailure());
 	}
 };
 
-export const UnFavoriteRecipeAction = (id: string): Thunk<void> => async (dispatch) => {
+export const UnFavoriteRecipeAction = (id: number): Thunk<void> => async (dispatch) => {
 	try {
 		await axios.delete(`/cookbook/favorite/${id}`);
 		dispatch(UnfavoriteRecipe.TUnfavoriteRecipeSuccess());

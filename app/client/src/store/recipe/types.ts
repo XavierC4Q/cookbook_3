@@ -46,17 +46,16 @@ export const TSingleRecipeAction = createAsyncAction(
 	'@@recipe/SINGLE RECIPE ERROR',
 )<undefined, IRecipe, string>();
 
-const TFavoriteRecipeSuccess = createStandardAction('@@recipe/FAVORITE SUCCESS')();
 
-const TFavoriteRecipeFailure = createStandardAction('@@recipe/FAVORITE FAILURE')();
+export const FavoriteRecipe = { 
+    TFavoriteRecipeFailure: createStandardAction('@@recipe/FAVORITE FAILURE')(), 
+    TFavoriteRecipeSuccess: createStandardAction('@@recipe/FAVORITE SUCCESS')(),
+};
 
-const TUnfavoriteRecipeSuccess = createStandardAction('@@recipe/UNFAVORITE SUCCESS')();
-
-const TUnfavoriteRecipeFailure = createStandardAction('@@recipe/UNFAVORITE FAILURE')();
-
-export const FavoriteRecipe = { TFavoriteRecipeFailure, TFavoriteRecipeSuccess };
-
-export const UnfavoriteRecipe = { TUnfavoriteRecipeFailure, TUnfavoriteRecipeSuccess };
+export const UnfavoriteRecipe = { 
+    TUnfavoriteRecipeFailure: createStandardAction('@@recipe/UNFAVORITE FAILURE')(), 
+    TUnfavoriteRecipeSuccess: createStandardAction('@@recipe/UNFAVORITE SUCCESS')(), 
+};
 
 const RecipeActionTypes = {
 	TRecipeListAction,

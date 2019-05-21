@@ -1,28 +1,74 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { IRecipe } from '../../store/recipe/types';
+import { connect } from 'react-redux';
+import { IRecipe, IRecipeFavorite } from '../../store/recipe/types';
+import { FavoriteRecipeAction, UnFavoriteRecipeAction } from '../../store/recipe/actions';
 import { IUser } from '../../store/auth/types';
+import axios from 'axios';
+import { Dispatch } from 'typesafe-actions';
+import { recipeEditLink } from '../util/recipe';
 
-interface IRecipeDetail {
+interface IRecipeDetailProps {
 	recipe: IRecipe | null;
 	currentUser: IUser | null;
 	owner: IUser | null;
 	closeDetail: () => void;
 }
 
-const recipeEditLink = (currentUser: IUser, owner: IUser, id: number): JSX.Element | null => {
-	if (currentUser.id === owner.id) {
-		const recipeEditUrl = `/recipe/edit/${id}`;
-		return (
-			<span>
-				<Link to={recipeEditUrl}>Edit Recipe</Link>
-			</span>
-		);
-	}
-	return null;
-};
+const dispatchProps = (dispatch: Dispatch) => ({
+	favorite: (favorited_by: IUser, recipe: IRecipe) => dispatch(FavoriteRecipeAction(favorited_by, recipe)),
+	unfavorite: (id: number) => dispatch(UnFavoriteRecipeAction(id)),
+});
 
-const RecipeDetail: React.FC<IRecipeDetail> = (props) => {
+const RecipeDetail: React.FC<IRecipeDetailProps & ReturnType<typeof dispatchProps>> = (props) => {
+	const [ detailRecipe, setDetailRecipe ] = React.useState<IRecipeFavorite | null>(null);
+
+	React.useEffect(() => {
+		if (props.currentUser && props.recipe) {
+			Promise.resolve(
+				axios.get('/cookbook/favorite/single_favorite/', {
+					params: {
+						user: props.currentUser.id,
+						recipe: props.recipe.id,
+					},
+				}),
+			)
+				.then((data) => {
+					if (data.data.length) {
+						setDetailRecipe(data.data[0]);
+					}
+				})
+				.catch((err) => {
+					console.log('FAILED TO GET FAVORITE', err);
+				});
+		}
+	}, [ props.favorite, props.unfavorite ]);
+
+	const handleFavoriteButton = () => {
+		if (props.currentUser && props.owner) {
+			if (!detailRecipe && props.currentUser.id !== props.owner.id) {
+				return (
+					<button
+						type='button'
+						onClick={() => props.favorite(props.currentUser as IUser, props.recipe as IRecipe)}
+					>
+						Favorite Recipe
+					</button>
+				);
+			}
+			if (detailRecipe && props.currentUser.id !== props.owner.id) {
+				return (
+					<button
+						type='button'
+						onClick={() => props.unfavorite((detailRecipe as IRecipeFavorite).id)}
+					>
+						Unfavorite Recipe
+					</button>
+				);
+			}
+		}
+		return null;
+	};
+
 	if (!props.recipe) {
 		return null;
 	}
@@ -58,12 +104,14 @@ const RecipeDetail: React.FC<IRecipeDetail> = (props) => {
 						</span>
 						<span>Favorites: {props.recipe.favorite_count}</span>
 						<span>Forks: 0</span>
+						{handleFavoriteButton()}
 					</div>
 				</div>
 				<div>
 					<div>
 						<h4>Ingredients</h4>
-						{props.recipe.ingredients &&
+						{props.recipe &&
+							props.recipe.ingredients.length > 0 &&
 							(props.recipe.ingredients as string[]).map((ingred, i) => <p key={i}>{ingred}</p>)}
 					</div>
 					<div>
@@ -75,4 +123,4 @@ const RecipeDetail: React.FC<IRecipeDetail> = (props) => {
 	);
 };
 
-export default RecipeDetail;
+export default connect(null, dispatchProps)(RecipeDetail);

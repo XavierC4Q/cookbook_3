@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
-import { ICredentials, INewUserCredentials } from '../store/auth/types';
-import { IRecipeFormValues } from '../store/recipe/types';
+import { ICredentials, INewUserCredentials } from '../../store/auth/types';
+import { IRecipeFormValues } from '../../store/recipe/types';
 import { FormikErrors, FieldProps } from 'formik';
 
 export const showErrors = (errors: FormikErrors<INewUserCredentials | ICredentials | IRecipeFormValues>) =>

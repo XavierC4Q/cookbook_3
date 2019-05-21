@@ -3,7 +3,7 @@ import { Field, Form, Formik, FormikActions, FormikProps } from 'formik';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserAuthState } from '../store/auth/reducers';
 import { INewUserCredentials } from '../store/auth/types';
-import { showErrors, signupValidate, FieldInput } from './formUtil';
+import { showErrors, signupValidate, FieldInput } from './util/forms';
 
 type OwnProps = { signupUser: (info: INewUserCredentials) => void };
 

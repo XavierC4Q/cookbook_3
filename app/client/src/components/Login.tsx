@@ -3,7 +3,7 @@ import { Field, Form, Formik, FormikActions, FormikProps } from 'formik';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserAuthState } from '../store/auth/reducers';
 import { ICredentials } from '../store/auth/types';
-import { showErrors, loginValidate, FieldInput } from './formUtil';
+import { showErrors, loginValidate, FieldInput } from './util/forms';
 
 type OwnProps = { loginUser: (info: ICredentials) => void };
 
