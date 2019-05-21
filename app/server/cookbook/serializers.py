@@ -134,3 +134,4 @@ class FavoriteSerializer(serializers.ModelSerializer):
         fields = "__all__"
         ordering = ["favorited_on"]
         depth = 1
+

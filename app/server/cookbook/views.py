@@ -30,7 +30,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
-    parser_classes = (JSONParser, FormParser, MultiPartParser,)
+    parser_classes = (
+        JSONParser,
+        FormParser,
+        MultiPartParser,
+    )
 
     @action(detail=False, methods=["GET"])
     def user_recipes(self, request):
@@ -39,7 +43,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(res, many=True)
         return Response(serializer.data)
-
 
 
 class FollowViewSet(viewsets.ModelViewSet):
@@ -67,6 +70,17 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         user_id = request.GET.get("user_id", 0)
 
         res = Favorite.objects.filter(favorited_by__id=user_id)
+
+        serializer = self.get_serializer(res, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'])
+    def single_favorite(self, request):
+        user_id = request.GET.get("user", 0)
+        recipe_id = request.GET.get("recipe", 0)
+
+        res = Favorite.objects.filter(recipe__id=recipe_id,
+                                      favorited_by__id=user_id)
 
         serializer = self.get_serializer(res, many=True)
         return Response(serializer.data)
