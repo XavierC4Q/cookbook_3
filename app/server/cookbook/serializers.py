@@ -6,13 +6,11 @@ from .adapter import CustomAdapter
 from allauth.account.utils import setup_user_email
 
 
-class RegisterSerializer (serializers.Serializer):
-    
-    username = serializers.CharField(
-        max_length=get_username_max_length(),
-        min_length=6,
-        required=True
-    )
+class RegisterSerializer(serializers.Serializer):
+
+    username = serializers.CharField(max_length=get_username_max_length(),
+                                     min_length=6,
+                                     required=True)
     email = serializers.EmailField(required=False)
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -38,7 +36,8 @@ class RegisterSerializer (serializers.Serializer):
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            raise serializers.ValidationError(("The two password fields didn't match."))
+            raise serializers.ValidationError(
+                ("The two password fields didn't match."))
         return data
 
     def get_cleaned_data(self):
@@ -66,11 +65,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_total_followers(self):
-        return Follow.objects.filter(follows__id=self.id).count()
+        if Follow.objects.filter(user__id=self.id):
+            return Follow.objects.filter(user__id=self.id).get().follows.count()
+        else:
+            return 0
 
     @staticmethod
     def get_total_favorites(self):
-        return Favorite.objects.filter(favorited_by=self.id).count()
+        if Favorite.objects.filter(favorited_by=self.id):
+            return Favorite.objects.filter(favorited_by=self.id).get().recipe.count()
+        else:
+            return 0
 
     @staticmethod
     def get_total_recipes(self):
@@ -101,7 +106,10 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_favorite_count(self):
-        return Favorite.objects.filter(recipe=self.id).count()
+        if Favorite.objects.filter(recipe=self.id):
+            return Favorite.objects.filter(recipe=self.id).count()
+        else:
+            return 0
 
     class Meta:
 
@@ -112,8 +120,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class FollowSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer(read_only=True)
-    follows = UserSerializer(read_only=True)
+    user = UserSerializer()
+    follows = UserSerializer(many=True)
 
     class Meta:
 
@@ -124,14 +132,10 @@ class FollowSerializer(serializers.ModelSerializer):
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
-
-    favorited_by = UserSerializer(read_only=True)
-    recipe = RecipeSerializer(read_only=True)
+    favorited_by = UserSerializer()
+    recipe = RecipeSerializer(many=True)
 
     class Meta:
 
         model = Favorite
         fields = "__all__"
-        ordering = ["favorited_on"]
-        depth = 1
-

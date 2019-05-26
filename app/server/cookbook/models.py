@@ -35,13 +35,11 @@ class Follow(models.Model):
     user = models.ForeignKey(
         User, related_name="user_follows", on_delete=models.CASCADE
     )
-    follows = models.ForeignKey(
-        User, related_name="follows_user", on_delete=models.CASCADE
-    )
+    follows = models.ManyToManyField(User)
     followed_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.username} follows {self.follows.username}'
+        return f'{self.user.id} follows'
 
 
 class Recipe(models.Model):
@@ -70,11 +68,10 @@ class Recipe(models.Model):
 
 class Favorite(models.Model):
 
-    favorited_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    favorited_on = models.DateTimeField(auto_now_add=True)
+    favorited_by = models.ForeignKey(
+        User, related_name='user_recipe_favorite', on_delete=models.CASCADE
+        )
+    recipe = models.ManyToManyField(Recipe)
 
     def __str__(self):
-        return f'''
-        {self.recipe.recipe_name} favorited by {self.favorited_by.username}
-        '''
+        return f'Recipe Favorite {self.id}'

@@ -65,7 +65,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavoriteSerializer
     queryset = Favorite.objects.all()
 
-    @action(detail=False, methods=['GET'])
+    @action(detail=False, methods=['GET', 'PATCH'])
     def user_favorites(self, request):
         user_id = request.GET.get("user_id", 0)
 
