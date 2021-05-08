@@ -21,6 +21,6 @@
   "dependencies": {
     "@types/lodash": "^4.14.123",
     "concurrently": "^4.1.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.21"
   }
 }
